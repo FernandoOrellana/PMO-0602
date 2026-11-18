@@ -5,3 +5,5 @@
 **/build/
 **/.gradle/
 **/google-services.json
+**/firebase-service-account.json
+**/*-firebase-adminsdk-*.json

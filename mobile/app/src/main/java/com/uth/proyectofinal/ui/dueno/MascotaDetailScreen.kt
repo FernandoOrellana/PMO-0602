@@ -1,8 +1,5 @@
 package com.uth.proyectofinal.ui.dueno
 
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.PickVisualMediaRequest
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,7 +13,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -44,6 +40,7 @@ import com.uth.proyectofinal.ui.common.AppScaffold
 import com.uth.proyectofinal.ui.common.ConfirmDialog
 import com.uth.proyectofinal.ui.common.EditIcon
 import com.uth.proyectofinal.ui.common.ErrorBox
+import com.uth.proyectofinal.ui.common.FotoSelector
 import com.uth.proyectofinal.ui.common.LoadingBox
 import com.uth.proyectofinal.ui.common.MessageViewModel
 import com.uth.proyectofinal.ui.common.OnResume
@@ -125,12 +122,6 @@ fun MascotaDetailScreen(
 
     OnResume { vm.cargar() }
 
-    val picker = rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
-        if (uri != null) {
-            scope.launch { vm.subirFoto(context.imagenPart(uri, "foto")) }
-        }
-    }
-
     LaunchedEffect(ui.eliminada) {
         if (ui.eliminada) onDeleted()
     }
@@ -175,13 +166,10 @@ fun MascotaDetailScreen(
                             Text("Sin foto", style = MaterialTheme.typography.bodyLarge)
                         }
                     }
-                    OutlinedButton(
-                        onClick = {
-                            picker.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
-                        },
+                    FotoSelector(
                         enabled = !ui.ocupado,
-                        modifier = Modifier.fillMaxWidth(),
-                    ) { Text("Cambiar foto") }
+                        onFoto = { uri -> scope.launch { vm.subirFoto(context.imagenPart(uri, "foto")) } },
+                    )
 
                     Text("Especie: ${m.especie?.nombre.orEmpty()}", style = MaterialTheme.typography.bodyLarge)
                     Text("Raza: ${m.raza ?: "No registrada"}", style = MaterialTheme.typography.bodyLarge)

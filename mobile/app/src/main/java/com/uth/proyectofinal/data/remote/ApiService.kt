@@ -146,6 +146,9 @@ interface ApiService {
     @GET("api/notificaciones")
     suspend fun notificaciones(): ApiResponse<List<Notificacion>>
 
+    @POST("api/notificaciones/prueba")
+    suspend fun probarNotificacion(): ApiResponse<PruebaPushDto>
+
     @PATCH("api/notificaciones/{id}/leer")
     suspend fun leerNotificacion(@Path("id") id: Int): ApiResponse<Notificacion>
 

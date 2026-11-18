@@ -41,6 +41,11 @@ module.exports = {
     return rows.map((r) => r.token);
   },
 
+  async eliminarDispositivos(tokens) {
+    if (!tokens.length) return;
+    await query(`DELETE FROM dispositivos WHERE fcm_token IN (${tokens.map(() => '?').join(', ')})`, tokens);
+  },
+
   async guardarDispositivo(usuarioId, fcmToken) {
     await query(
       `INSERT INTO dispositivos (usuario_id, fcm_token) VALUES (?, ?)

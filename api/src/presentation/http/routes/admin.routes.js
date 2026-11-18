@@ -8,7 +8,7 @@ const { ROLES } = require('../../../domain/constants');
 
 module.exports = function adminRoutes({ useCases, security }) {
   const router = Router();
-  const { admin } = useCases;
+  const { admin, recordatorios } = useCases;
   const subirImagen = crearUpload('productos', 'imagen');
 
   router.use(autenticar(security.tokens), autorizar(ROLES.ADMINISTRADOR));
@@ -59,6 +59,8 @@ module.exports = function adminRoutes({ useCases, security }) {
     async (req, res) =>
       ok(res, await admin.veterinarios.actualizarHorarios(req.input.params.id, req.input.body))
   );
+
+  router.post('/recordatorios/ejecutar', async (_req, res) => ok(res, await recordatorios()));
 
   router.get('/reportes/ventas', validar({ query: schemas.rangoReporte }), async (req, res) =>
     ok(res, await admin.reportes.ventas(req.input.query))

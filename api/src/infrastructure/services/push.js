@@ -2,6 +2,12 @@ const fs = require('fs');
 const path = require('path');
 const config = require('../../config/env');
 
+const TOKENS_INVALIDOS = new Set([
+  'messaging/registration-token-not-registered',
+  'messaging/invalid-registration-token',
+  'messaging/invalid-argument',
+]);
+
 let messaging;
 
 const getMessaging = () => {
@@ -18,17 +24,27 @@ const getMessaging = () => {
 };
 
 module.exports = {
+  activo: () => Boolean(getMessaging()),
+
   async enviar(tokens, { titulo, mensaje, data = {} }) {
-    if (!tokens.length) return;
+    if (!tokens.length) return { enviados: 0, invalidos: [] };
     const m = getMessaging();
     if (!m) {
       console.log(`[push-dev] ${titulo}: ${mensaje} (${tokens.length} dispositivo(s))`);
-      return;
+      return { enviados: 0, invalidos: [] };
     }
-    await m.sendEachForMulticast({
+    const respuesta = await m.sendEachForMulticast({
       tokens,
       notification: { title: titulo, body: mensaje },
       data: Object.fromEntries(Object.entries(data).map(([k, v]) => [k, String(v)])),
+      android: {
+        priority: 'high',
+        notification: { channelId: 'petcare_recordatorios', color: '#1B7F5C', sound: 'default' },
+      },
     });
+    const invalidos = respuesta.responses
+      .map((r, i) => (!r.success && TOKENS_INVALIDOS.has(r.error?.code) ? tokens[i] : null))
+      .filter(Boolean);
+    return { enviados: respuesta.successCount, invalidos };
   },
 };

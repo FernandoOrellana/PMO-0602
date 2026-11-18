@@ -53,6 +53,7 @@ const paths = {
 
   '/api/usuarios/me/dispositivos': { post: op({ tag: 'Usuarios', summary: 'Registrar token FCM del dispositivo', body: { type: 'object', required: ['fcmToken'], properties: { fcmToken: str() } }, ok: { type: 'object', properties: { message: str() } } }) },
   '/api/notificaciones': { get: op({ tag: 'Usuarios', summary: 'Listar notificaciones', lista: false, ok: { type: 'array', items: ref('Notificacion') } }) },
+  '/api/notificaciones/prueba': { post: op({ tag: 'Usuarios', summary: 'Enviar una notificación push de prueba a mis dispositivos', ok: { type: 'object', properties: { message: str(), dispositivos: int(), enviados: int() } } }) },
   '/api/notificaciones/{id}/leer': { patch: op({ tag: 'Usuarios', summary: 'Marcar notificación como leída', params: [idParam], ok: { type: 'object', properties: { message: str() } } }) },
 
   '/api/especies': { get: op({ tag: 'Catálogos', summary: 'Listar especies', ok: { type: 'array', items: ref('Especie') } }) },
@@ -107,6 +108,7 @@ const paths = {
   '/api/admin/veterinarios/{id}': { put: op({ tag: 'Admin', summary: 'Actualizar veterinario', roles: 'ADMINISTRADOR', params: [idParam], body: { type: 'object', required: ['nombre'], properties: { nombre: str(), telefono: str() } }, ok: ref('Veterinario') }) },
   '/api/admin/veterinarios/{id}/horarios': { put: op({ tag: 'Admin', summary: 'Definir horarios del veterinario', roles: 'ADMINISTRADOR', params: [idParam], body: { type: 'array', items: { type: 'object', required: ['diaSemana', 'horaInicio', 'horaFin'], properties: { diaSemana: int({ minimum: 0, maximum: 6, description: '0=Domingo' }), horaInicio: str({ example: '08:00' }), horaFin: str({ example: '17:00' }) } } }, ok: ref('Veterinario') }) },
   '/api/admin/reportes/ventas': { get: op({ tag: 'Admin', summary: 'Reporte de ventas', roles: 'ADMINISTRADOR', params: [{ name: 'desde', in: 'query', schema: str({ format: 'date' }) }, { name: 'hasta', in: 'query', schema: str({ format: 'date' }) }], ok: ref('ReporteVentas') }) },
+  '/api/admin/recordatorios/ejecutar': { post: op({ tag: 'Admin', summary: 'Ejecutar ahora el job de recordatorios de vacunas y citas', roles: 'ADMINISTRADOR', ok: { type: 'object', properties: { vacunas: int(), citas: int() } } }) },
   '/api/admin/reportes/citas': { get: op({ tag: 'Admin', summary: 'Reporte de citas', roles: 'ADMINISTRADOR', params: [{ name: 'desde', in: 'query', schema: str({ format: 'date' }) }, { name: 'hasta', in: 'query', schema: str({ format: 'date' }) }], ok: ref('ReporteCitas') }) },
 };
 

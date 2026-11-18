@@ -16,7 +16,6 @@ class PushRegistrar(
 
     fun sync() {
         if (tokens.accessToken == null) return
-        // Firebase lanza excepción si no hay google-services.json; se ignora.
         runCatching {
             FirebaseMessaging.getInstance().token.addOnSuccessListener { send(it) }
         }

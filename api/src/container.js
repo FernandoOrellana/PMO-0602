@@ -46,7 +46,7 @@ const useCases = {
   tienda: createTiendaUseCases(repositorios),
   catalogos: createCatalogosUseCases(repositorios),
   admin: createAdminUseCases({ ...repositorios, security, storage }),
-  notificaciones: createNotificacionesUseCases(repositorios),
+  notificaciones: createNotificacionesUseCases({ ...repositorios, push }),
   recordatorios: createRecordatoriosUseCases({ ...repositorios, push, config }),
 };
 

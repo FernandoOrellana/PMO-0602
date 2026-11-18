@@ -21,6 +21,10 @@ module.exports = function usuariosRoutes({ useCases, security }) {
     ok(res, await notificaciones.listar(req.user.id))
   );
 
+  router.post('/notificaciones/prueba', auth, async (req, res) =>
+    ok(res, await notificaciones.probar(req.user.id))
+  );
+
   router.patch(
     '/notificaciones/:id/leer',
     auth,

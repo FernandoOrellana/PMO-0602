@@ -431,6 +431,36 @@
           }
         },
         {
+          "name": "Enviar una notificación push de prueba a mis dispositivos",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/notificaciones/prueba",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "notificaciones",
+                "prueba"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
           "name": "Marcar notificación como leída",
           "request": {
             "method": "PATCH",
@@ -1966,6 +1996,37 @@
                   "disabled": true
                 }
               ],
+              "variable": []
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Ejecutar ahora el job de recordatorios de vacunas y citas (ADMINISTRADOR)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/recordatorios/ejecutar",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "recordatorios",
+                "ejecutar"
+              ],
+              "query": [],
               "variable": []
             },
             "auth": {
