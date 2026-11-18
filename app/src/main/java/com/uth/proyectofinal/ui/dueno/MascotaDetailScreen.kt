@@ -1,0 +1,218 @@
+package com.uth.proyectofinal.ui.dueno
+
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.draw.clip
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.viewModel
+import coil3.compose.AsyncImage
+import com.uth.proyectofinal.data.remote.dto.Mascota
+import com.uth.proyectofinal.data.repository.ApiResult
+import com.uth.proyectofinal.data.repository.MascotaRepository
+import com.uth.proyectofinal.ui.common.AppScaffold
+import com.uth.proyectofinal.ui.common.ConfirmDialog
+import com.uth.proyectofinal.ui.common.EditIcon
+import com.uth.proyectofinal.ui.common.ErrorBox
+import com.uth.proyectofinal.ui.common.LoadingBox
+import com.uth.proyectofinal.ui.common.MessageViewModel
+import com.uth.proyectofinal.ui.common.OnResume
+import com.uth.proyectofinal.ui.common.appFactory
+import com.uth.proyectofinal.ui.common.imagenPart
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+
+data class MascotaDetailUi(
+    val mascota: Mascota? = null,
+    val cargando: Boolean = true,
+    val error: String? = null,
+    val ocupado: Boolean = false,
+    val eliminada: Boolean = false,
+)
+
+class MascotaDetailViewModel(
+    private val id: Int,
+    private val mascotas: MascotaRepository,
+) : MessageViewModel() {
+
+    private val _ui = MutableStateFlow(MascotaDetailUi())
+    val ui: StateFlow<MascotaDetailUi> = _ui.asStateFlow()
+
+    fun cargar() {
+        viewModelScope.launch {
+            _ui.update { it.copy(cargando = true, error = null) }
+            when (val result = mascotas.get(id)) {
+                is ApiResult.Success -> _ui.update { it.copy(mascota = result.data, cargando = false) }
+                is ApiResult.Error -> _ui.update { it.copy(cargando = false, error = result.message) }
+            }
+        }
+    }
+
+    fun subirFoto(foto: okhttp3.MultipartBody.Part) {
+        viewModelScope.launch {
+            _ui.update { it.copy(ocupado = true) }
+            when (val result = mascotas.subirFoto(id, foto)) {
+                is ApiResult.Success -> {
+                    _ui.update { it.copy(mascota = result.data) }
+                    say("Foto actualizada.")
+                }
+                is ApiResult.Error -> say(result.message)
+            }
+            _ui.update { it.copy(ocupado = false) }
+        }
+    }
+
+    fun eliminar() {
+        viewModelScope.launch {
+            _ui.update { it.copy(ocupado = true) }
+            when (val result = mascotas.delete(id)) {
+                is ApiResult.Success -> _ui.update { it.copy(eliminada = true) }
+                is ApiResult.Error -> {
+                    say(result.message)
+                    _ui.update { it.copy(ocupado = false) }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun MascotaDetailScreen(
+    id: Int,
+    onBack: () -> Unit,
+    onEdit: (Int) -> Unit,
+    onCarne: (Int) -> Unit,
+    onDeleted: () -> Unit,
+) {
+    val vm: MascotaDetailViewModel = viewModel(factory = appFactory { MascotaDetailViewModel(id, it.mascotas) })
+    val ui by vm.ui.collectAsStateWithLifecycle()
+    val context = LocalContext.current
+    val scope = rememberCoroutineScope()
+    var confirmar by remember { mutableStateOf(false) }
+
+    OnResume { vm.cargar() }
+
+    val picker = rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+        if (uri != null) {
+            scope.launch { vm.subirFoto(context.imagenPart(uri, "foto")) }
+        }
+    }
+
+    LaunchedEffect(ui.eliminada) {
+        if (ui.eliminada) onDeleted()
+    }
+
+    AppScaffold(
+        title = ui.mascota?.nombre ?: "Mascota",
+        onBack = onBack,
+        messages = vm.messages,
+        actions = {
+            if (ui.mascota != null) EditIcon("Editar") { onEdit(id) }
+        },
+    ) { padding ->
+        when {
+            ui.cargando -> LoadingBox(Modifier.padding(padding))
+            ui.mascota == null -> ErrorBox(ui.error ?: "No se pudo cargar la mascota.", vm::cargar, Modifier.padding(padding))
+            else -> {
+                val m = ui.mascota!!
+                Column(
+                    modifier = Modifier
+                        .padding(padding)
+                        .padding(16.dp)
+                        .fillMaxSize()
+                        .verticalScroll(rememberScrollState()),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.spacedBy(12.dp),
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(220.dp)
+                            .clip(RoundedCornerShape(16.dp)),
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        if (m.fotoUrl != null) {
+                            AsyncImage(
+                                model = m.fotoUrl,
+                                contentDescription = m.nombre,
+                                contentScale = ContentScale.Crop,
+                                modifier = Modifier.fillMaxSize(),
+                            )
+                        } else {
+                            Text("Sin foto", style = MaterialTheme.typography.bodyLarge)
+                        }
+                    }
+                    OutlinedButton(
+                        onClick = {
+                            picker.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+                        },
+                        enabled = !ui.ocupado,
+                        modifier = Modifier.fillMaxWidth(),
+                    ) { Text("Cambiar foto") }
+
+                    Text("Especie: ${m.especie?.nombre.orEmpty()}", style = MaterialTheme.typography.bodyLarge)
+                    Text("Raza: ${m.raza ?: "No registrada"}", style = MaterialTheme.typography.bodyLarge)
+                    Text("Nacimiento: ${m.fechaNacimiento ?: "No registrada"}", style = MaterialTheme.typography.bodyLarge)
+                    Text("Peso: ${m.pesoKg?.let { "$it kg" } ?: "No registrado"}", style = MaterialTheme.typography.bodyLarge)
+
+                    Button(onClick = { onCarne(id) }, modifier = Modifier.fillMaxWidth()) {
+                        Text("Carné e historial")
+                    }
+                    Button(
+                        onClick = { confirmar = true },
+                        enabled = !ui.ocupado,
+                        colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error),
+                        modifier = Modifier.fillMaxWidth(),
+                    ) { Text("Eliminar mascota") }
+                    TextButton(onClick = vm::cargar) { Text("Actualizar") }
+                }
+            }
+        }
+    }
+
+    if (confirmar) {
+        ConfirmDialog(
+            title = "Eliminar mascota",
+            text = "Se eliminará ${ui.mascota?.nombre.orEmpty()} de tu lista. ¿Continuar?",
+            confirmText = "Eliminar",
+            onConfirm = {
+                confirmar = false
+                vm.eliminar()
+            },
+            onDismiss = { confirmar = false },
+        )
+    }
+}
