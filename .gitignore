@@ -1,0 +1,7 @@
+**/.env
+**/node_modules/
+**/uploads/
+**/local.properties
+**/build/
+**/.gradle/
+**/google-services.json

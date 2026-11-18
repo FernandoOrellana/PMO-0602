@@ -1,0 +1,11 @@
+package com.uth.proyectofinal.data.remote.dto
+
+data class Ref(val id: Int = 0, val nombre: String = "")
+
+data class MessageDto(val message: String? = null)
+
+object Rol {
+    const val DUENO = "DUENO"
+    const val VETERINARIO = "VETERINARIO"
+    const val ADMINISTRADOR = "ADMINISTRADOR"
+}
