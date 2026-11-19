@@ -60,7 +60,7 @@ public class CitasService(
             VeterinarioId = actor.Rol == Roles.Veterinario ? actor.Id : null,
         };
         var (items, total) = await citas.PaginarAsync(final, ct);
-        return new Pagina<CitaDto>(items.Select(mapeador.Cita).ToList(), Paginacion.Crear(filtro.Page, filtro.Limit, total));
+        return new Pagina<CitaDto>(items.Select(c => mapeador.Cita(c)).ToList(), Paginacion.Crear(filtro.Page, filtro.Limit, total));
     }
 
     public async Task<CitaDto> ObtenerAsync(Actor actor, int id, CancellationToken ct)
@@ -105,6 +105,39 @@ public class CitasService(
         await uow.GuardarAsync(ct);
         consulta.Veterinario = cita.Veterinario;
         return mapeador.Consulta(consulta);
+    }
+
+    public async Task<ConsultaDto> ActualizarObservacionesAsync(Actor actor, int citaId, string observaciones, CancellationToken ct)
+    {
+        var cita = await Cargar(citaId, ct);
+        var consulta = await citas.ConsultaPorCitaAsync(citaId, ct);
+        if (consulta is not null)
+        {
+            consulta.Observaciones = observaciones?.Trim();
+            await uow.GuardarAsync(ct);
+            consulta.Veterinario ??= await veterinarios.PorIdAsync(consulta.VeterinarioId, ct) ?? cita.Veterinario;
+            return mapeador.Consulta(consulta);
+        }
+        else
+        {
+            consulta = new Consulta
+            {
+                CitaId = cita.Id,
+                MascotaId = cita.MascotaId,
+                VeterinarioId = actor.Id,
+                Fecha = cita.Fecha,
+                Diagnostico = "Consulta médica",
+                Observaciones = observaciones?.Trim(),
+            };
+            if (cita.Estado == EstadoCita.PENDIENTE || cita.Estado == EstadoCita.CONFIRMADA)
+            {
+                cita.Estado = EstadoCita.ATENDIDA;
+            }
+            citas.AgregarConsulta(consulta);
+            await uow.GuardarAsync(ct);
+            consulta.Veterinario = await veterinarios.PorIdAsync(actor.Id, ct) ?? cita.Veterinario;
+            return mapeador.Consulta(consulta);
+        }
     }
 
     private async Task<Cita> Cargar(int id, CancellationToken ct) =>

@@ -22,6 +22,8 @@ public record CitaRequest(int MascotaId, int ServicioId, int VeterinarioId, Date
 
 public record ConsultaRequest(string Diagnostico, string? Tratamiento, string? Observaciones, decimal? Peso);
 
+public record ObservacionesRequest(string Observaciones);
+
 public record ItemPedidoRequest(int ProductoId, int Cantidad);
 
 public record PedidoRequest(IReadOnlyList<ItemPedidoRequest> Items);

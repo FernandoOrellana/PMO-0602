@@ -63,7 +63,8 @@ public record CitaDto(
     ResumenDto Mascota,
     ServicioResumenDto Servicio,
     ResumenDto Veterinario,
-    DuenoDto Dueno);
+    DuenoDto Dueno,
+    ConsultaDto? Consulta = null);
 
 public record HistorialDto(MascotaDto Mascota, IReadOnlyList<ConsultaDto> Consultas, IReadOnlyList<AplicacionVacunaDto> Vacunas, IReadOnlyList<CitaDto> Citas);
 

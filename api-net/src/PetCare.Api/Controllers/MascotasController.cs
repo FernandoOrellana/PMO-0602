@@ -63,6 +63,10 @@ public class MascotasController(MascotasService mascotas, IValidator<MascotaRequ
     public async Task<IActionResult> Historial(int id, CancellationToken ct) =>
         Respuesta(await mascotas.HistorialAsync(Actor, id, ct));
 
+    [HttpGet("{id:int}/citas")]
+    public async Task<IActionResult> Citas(int id, CancellationToken ct) =>
+        Respuesta(await mascotas.CitasDeMascotaAsync(Actor, id, ct));
+
     [HttpPost("{id:int}/vacunas")]
     [Authorize(Roles = Roles.Veterinario)]
     public async Task<IActionResult> RegistrarVacuna(int id, [FromBody] AplicacionVacunaRequest r, CancellationToken ct)

@@ -92,6 +92,9 @@ interface ApiService {
     @GET("api/mascotas/{id}/historial")
     suspend fun historial(@Path("id") id: Int): ApiResponse<Historial>
 
+    @GET("api/mascotas/{id}/citas")
+    suspend fun citasMascota(@Path("id") id: Int): ApiResponse<List<Cita>>
+
     @POST("api/mascotas/{id}/vacunas")
     suspend fun registrarVacuna(
         @Path("id") id: Int,
@@ -119,6 +122,12 @@ interface ApiService {
     suspend fun registrarConsulta(
         @Path("id") id: Int,
         @Body body: ConsultaRequest,
+    ): ApiResponse<Consulta>
+
+    @PATCH("api/citas/{id}/observaciones")
+    suspend fun agregarObservacion(
+        @Path("id") id: Int,
+        @Body body: com.uth.proyectofinal.data.remote.dto.ObservacionesRequest,
     ): ApiResponse<Consulta>
 
     @GET("api/productos")

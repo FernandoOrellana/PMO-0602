@@ -17,4 +17,7 @@ class CitaRepository(private val api: ApiService) {
 
     suspend fun registrarConsulta(id: Int, body: ConsultaRequest) =
         apiCall { api.registrarConsulta(id, body) }
+
+    suspend fun agregarObservacion(id: Int, observaciones: String) =
+        apiCall { api.agregarObservacion(id, com.uth.proyectofinal.data.remote.dto.ObservacionesRequest(observaciones)) }
 }

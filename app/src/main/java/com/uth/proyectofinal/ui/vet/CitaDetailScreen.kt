@@ -61,6 +61,7 @@ fun CitaDetailScreen(
     onBack: () -> Unit,
     onConsulta: (Int) -> Unit,
     onVacuna: (Int, Int) -> Unit,
+    onHistorialMascota: (Int) -> Unit,
 ) {
     val vm: CitaDetailViewModel = viewModel(factory = appFactory { CitaDetailViewModel(id, it.citas) })
     val ui by vm.ui.collectAsStateWithLifecycle()
@@ -82,6 +83,13 @@ fun CitaDetailScreen(
                 Text("Dueño: ${cita.dueno?.nombre.orEmpty()}", style = MaterialTheme.typography.bodyLarge)
                 Text("Servicio: ${cita.servicio.nombre} (${cita.servicio.precio.lps()})", style = MaterialTheme.typography.bodyLarge)
                 Text("Veterinario: ${cita.veterinario.nombre}", style = MaterialTheme.typography.bodyLarge)
+
+                Button(
+                    onClick = { onHistorialMascota(cita.mascota.id) },
+                    modifier = Modifier.fillMaxWidth(),
+                ) {
+                    Text("Ver historial de citas de la mascota")
+                }
                 Button(onClick = { onConsulta(cita.id) }, modifier = Modifier.fillMaxWidth()) {
                     Text("Registrar consulta")
                 }

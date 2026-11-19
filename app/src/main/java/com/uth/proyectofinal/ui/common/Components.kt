@@ -251,13 +251,22 @@ fun ConfirmDialog(
 
 @Composable
 fun EstadoBadge(text: String) {
+    val (bgColor, textColor) = when (text.uppercase()) {
+        "ATENDIDA" -> androidx.compose.ui.graphics.Color(0xFFE8F5E9) to androidx.compose.ui.graphics.Color(0xFF2E7D32)
+        "CONFIRMADA" -> androidx.compose.ui.graphics.Color(0xFFE3F2FD) to androidx.compose.ui.graphics.Color(0xFF1565C0)
+        "PENDIENTE" -> androidx.compose.ui.graphics.Color(0xFFFFF8E1) to androidx.compose.ui.graphics.Color(0xFFF57F17)
+        "CANCELADA" -> androidx.compose.ui.graphics.Color(0xFFFFEBEE) to androidx.compose.ui.graphics.Color(0xFFC62828)
+        else -> MaterialTheme.colorScheme.secondaryContainer to MaterialTheme.colorScheme.onSecondaryContainer
+    }
     Surface(
         shape = RoundedCornerShape(50),
-        color = MaterialTheme.colorScheme.secondaryContainer,
+        color = bgColor,
     ) {
         Text(
             text,
+            color = textColor,
             style = MaterialTheme.typography.labelMedium,
+            fontWeight = FontWeight.SemiBold,
             modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp),
         )
     }

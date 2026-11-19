@@ -20,24 +20,39 @@ import com.uth.proyectofinal.ui.common.PagedViewModel
 import com.uth.proyectofinal.ui.common.SimpleCard
 import com.uth.proyectofinal.ui.common.appFactory
 
+import com.uth.proyectofinal.data.remote.dto.Rol
+
 class MascotasViewModel(private val repo: MascotaRepository) : PagedViewModel<Mascota>() {
     override suspend fun fetch(page: Int): ApiResult<Page<List<Mascota>>> = repo.list(page)
 }
 
 @Composable
-fun MascotasScreen(onAdd: () -> Unit, onOpen: (Int) -> Unit) {
+fun MascotasScreen(
+    rol: String? = null,
+    onAdd: () -> Unit,
+    onOpen: (Int) -> Unit,
+) {
     val vm: MascotasViewModel = viewModel(factory = appFactory { MascotasViewModel(it.mascotas) })
     val state by vm.state.collectAsStateWithLifecycle()
+    val esDueno = rol == null || rol == Rol.DUENO
 
     OnResume { vm.refresh() }
 
     AppScaffold(
-        title = "Mis mascotas",
-        floatingActionButton = { AddFab("Agregar mascota", onAdd) },
+        title = if (esDueno) "Mis mascotas" else "Mascotas / Pacientes",
+        floatingActionButton = {
+            if (esDueno) {
+                AddFab("Agregar mascota", onAdd)
+            }
+        },
     ) { padding ->
         PagedColumn(
             state = state,
-            emptyText = "Aún no tienes mascotas registradas. Usa + para agregar una.",
+            emptyText = if (esDueno) {
+                "Aún no tienes mascotas registradas. Usa + para agregar una."
+            } else {
+                "No hay mascotas registradas en el sistema."
+            },
             onLoadMore = vm::loadMore,
             modifier = Modifier.padding(padding),
         ) { m ->

@@ -12,7 +12,11 @@ namespace PetCare.Api.Controllers;
 [ApiController]
 [Route("api/citas")]
 [Authorize]
-public class CitasController(CitasService citas, IValidator<CitaRequest> vCita, IValidator<ConsultaRequest> vConsulta) : ControladorBase
+public class CitasController(
+    CitasService citas,
+    IValidator<CitaRequest> vCita,
+    IValidator<ConsultaRequest> vConsulta,
+    IValidator<ObservacionesRequest> vObservaciones) : ControladorBase
 {
     [HttpPost]
     [Authorize(Roles = Roles.Dueno)]
@@ -46,5 +50,13 @@ public class CitasController(CitasService citas, IValidator<CitaRequest> vCita, 
     {
         await ValidarAsync(vConsulta, r);
         return Respuesta(await citas.RegistrarConsultaAsync(Actor, id, r, ct), StatusCodes.Status201Created);
+    }
+
+    [HttpPatch("{id:int}/observaciones")]
+    [Authorize(Roles = $"{Roles.Administrador},{Roles.Veterinario}")]
+    public async Task<IActionResult> ActualizarObservaciones(int id, [FromBody] ObservacionesRequest r, CancellationToken ct)
+    {
+        await ValidarAsync(vObservaciones, r);
+        return Respuesta(await citas.ActualizarObservacionesAsync(Actor, id, r.Observaciones, ct));
     }
 }

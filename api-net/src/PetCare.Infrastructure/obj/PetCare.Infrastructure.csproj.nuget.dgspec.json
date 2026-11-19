@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/home/msi/AndroidStudioProjects/ProyectoFinal/api-net/src/PetCare.Infrastructure/PetCare.Infrastructure.csproj": {}
+    "C:\\Users\\abadc\\Desktop\\PMO-0602\\api-net\\src\\PetCare.Infrastructure\\PetCare.Infrastructure.csproj": {}
   },
   "projects": {
-    "/home/msi/AndroidStudioProjects/ProyectoFinal/api-net/src/PetCare.Application/PetCare.Application.csproj": {
+    "C:\\Users\\abadc\\Desktop\\PMO-0602\\api-net\\src\\PetCare.Application\\PetCare.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/msi/AndroidStudioProjects/ProyectoFinal/api-net/src/PetCare.Application/PetCare.Application.csproj",
+        "projectUniqueName": "C:\\Users\\abadc\\Desktop\\PMO-0602\\api-net\\src\\PetCare.Application\\PetCare.Application.csproj",
         "projectName": "PetCare.Application",
-        "projectPath": "/home/msi/AndroidStudioProjects/ProyectoFinal/api-net/src/PetCare.Application/PetCare.Application.csproj",
-        "packagesPath": "/home/msi/.nuget/packages/",
-        "outputPath": "/home/msi/AndroidStudioProjects/ProyectoFinal/api-net/src/PetCare.Application/obj/",
+        "projectPath": "C:\\Users\\abadc\\Desktop\\PMO-0602\\api-net\\src\\PetCare.Application\\PetCare.Application.csproj",
+        "packagesPath": "C:\\Users\\abadc\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\abadc\\Desktop\\PMO-0602\\api-net\\src\\PetCare.Application\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/msi/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\abadc\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net10.0"
@@ -27,8 +27,8 @@
             "framework": "net10.0",
             "targetAlias": "net10.0",
             "projectReferences": {
-              "/home/msi/AndroidStudioProjects/ProyectoFinal/api-net/src/PetCare.Domain/PetCare.Domain.csproj": {
-                "projectPath": "/home/msi/AndroidStudioProjects/ProyectoFinal/api-net/src/PetCare.Domain/PetCare.Domain.csproj"
+              "C:\\Users\\abadc\\Desktop\\PMO-0602\\api-net\\src\\PetCare.Domain\\PetCare.Domain.csproj": {
+                "projectPath": "C:\\Users\\abadc\\Desktop\\PMO-0602\\api-net\\src\\PetCare.Domain\\PetCare.Domain.csproj"
               }
             }
           }
@@ -83,7 +83,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/home/msi/.dotnet10/sdk/10.0.404/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.403/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.CSharp": "(,4.7.32767]",
             "Microsoft.VisualBasic": "(,10.4.32767]",
@@ -361,17 +361,17 @@
         }
       }
     },
-    "/home/msi/AndroidStudioProjects/ProyectoFinal/api-net/src/PetCare.Domain/PetCare.Domain.csproj": {
+    "C:\\Users\\abadc\\Desktop\\PMO-0602\\api-net\\src\\PetCare.Domain\\PetCare.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/msi/AndroidStudioProjects/ProyectoFinal/api-net/src/PetCare.Domain/PetCare.Domain.csproj",
+        "projectUniqueName": "C:\\Users\\abadc\\Desktop\\PMO-0602\\api-net\\src\\PetCare.Domain\\PetCare.Domain.csproj",
         "projectName": "PetCare.Domain",
-        "projectPath": "/home/msi/AndroidStudioProjects/ProyectoFinal/api-net/src/PetCare.Domain/PetCare.Domain.csproj",
-        "packagesPath": "/home/msi/.nuget/packages/",
-        "outputPath": "/home/msi/AndroidStudioProjects/ProyectoFinal/api-net/src/PetCare.Domain/obj/",
+        "projectPath": "C:\\Users\\abadc\\Desktop\\PMO-0602\\api-net\\src\\PetCare.Domain\\PetCare.Domain.csproj",
+        "packagesPath": "C:\\Users\\abadc\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\abadc\\Desktop\\PMO-0602\\api-net\\src\\PetCare.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/msi/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\abadc\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net10.0"
@@ -418,7 +418,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/home/msi/.dotnet10/sdk/10.0.404/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.403/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.CSharp": "(,4.7.32767]",
             "Microsoft.VisualBasic": "(,10.4.32767]",
@@ -696,17 +696,17 @@
         }
       }
     },
-    "/home/msi/AndroidStudioProjects/ProyectoFinal/api-net/src/PetCare.Infrastructure/PetCare.Infrastructure.csproj": {
+    "C:\\Users\\abadc\\Desktop\\PMO-0602\\api-net\\src\\PetCare.Infrastructure\\PetCare.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/msi/AndroidStudioProjects/ProyectoFinal/api-net/src/PetCare.Infrastructure/PetCare.Infrastructure.csproj",
+        "projectUniqueName": "C:\\Users\\abadc\\Desktop\\PMO-0602\\api-net\\src\\PetCare.Infrastructure\\PetCare.Infrastructure.csproj",
         "projectName": "PetCare.Infrastructure",
-        "projectPath": "/home/msi/AndroidStudioProjects/ProyectoFinal/api-net/src/PetCare.Infrastructure/PetCare.Infrastructure.csproj",
-        "packagesPath": "/home/msi/.nuget/packages/",
-        "outputPath": "/home/msi/AndroidStudioProjects/ProyectoFinal/api-net/src/PetCare.Infrastructure/obj/",
+        "projectPath": "C:\\Users\\abadc\\Desktop\\PMO-0602\\api-net\\src\\PetCare.Infrastructure\\PetCare.Infrastructure.csproj",
+        "packagesPath": "C:\\Users\\abadc\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\abadc\\Desktop\\PMO-0602\\api-net\\src\\PetCare.Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/msi/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\abadc\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net10.0"
@@ -719,11 +719,11 @@
             "framework": "net10.0",
             "targetAlias": "net10.0",
             "projectReferences": {
-              "/home/msi/AndroidStudioProjects/ProyectoFinal/api-net/src/PetCare.Application/PetCare.Application.csproj": {
-                "projectPath": "/home/msi/AndroidStudioProjects/ProyectoFinal/api-net/src/PetCare.Application/PetCare.Application.csproj"
+              "C:\\Users\\abadc\\Desktop\\PMO-0602\\api-net\\src\\PetCare.Application\\PetCare.Application.csproj": {
+                "projectPath": "C:\\Users\\abadc\\Desktop\\PMO-0602\\api-net\\src\\PetCare.Application\\PetCare.Application.csproj"
               },
-              "/home/msi/AndroidStudioProjects/ProyectoFinal/api-net/src/PetCare.Domain/PetCare.Domain.csproj": {
-                "projectPath": "/home/msi/AndroidStudioProjects/ProyectoFinal/api-net/src/PetCare.Domain/PetCare.Domain.csproj"
+              "C:\\Users\\abadc\\Desktop\\PMO-0602\\api-net\\src\\PetCare.Domain\\PetCare.Domain.csproj": {
+                "projectPath": "C:\\Users\\abadc\\Desktop\\PMO-0602\\api-net\\src\\PetCare.Domain\\PetCare.Domain.csproj"
               }
             }
           }
@@ -790,7 +790,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/home/msi/.dotnet10/sdk/10.0.404/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.403/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.CSharp": "(,4.7.32767]",
             "Microsoft.VisualBasic": "(,10.4.32767]",

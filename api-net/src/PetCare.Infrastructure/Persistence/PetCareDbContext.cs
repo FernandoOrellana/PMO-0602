@@ -88,12 +88,30 @@ public class PetCareDbContext(DbContextOptions<PetCareDbContext> options) : DbCo
         });
 
         var conversorHora = new ValueConverter<TimeOnly, TimeSpan>(h => h.ToTimeSpan(), t => TimeOnly.FromTimeSpan(t));
+        var conversorFecha = new ValueConverter<DateOnly, DateTime>(
+            d => d.ToDateTime(TimeOnly.MinValue),
+            dt => DateOnly.FromDateTime(dt));
+        var conversorFechaNullable = new ValueConverter<DateOnly?, DateTime?>(
+            d => d.HasValue ? d.Value.ToDateTime(TimeOnly.MinValue) : null,
+            dt => dt.HasValue ? DateOnly.FromDateTime(dt.Value) : null);
+
         b.Entity<VeterinarioHorario>(e =>
         {
             e.Property(h => h.HoraInicio).HasConversion(conversorHora);
             e.Property(h => h.HoraFin).HasConversion(conversorHora);
         });
-        b.Entity<Cita>(e => e.Property(c => c.Hora).HasConversion(conversorHora));
+        b.Entity<Mascota>(e => e.Property(m => m.FechaNacimiento).HasConversion(conversorFechaNullable));
+        b.Entity<Cita>(e =>
+        {
+            e.Property(c => c.Hora).HasConversion(conversorHora);
+            e.Property(c => c.Fecha).HasConversion(conversorFecha);
+        });
+        b.Entity<Consulta>(e => e.Property(c => c.Fecha).HasConversion(conversorFecha));
+        b.Entity<AplicacionVacuna>(e =>
+        {
+            e.Property(a => a.FechaAplicacion).HasConversion(conversorFecha);
+            e.Property(a => a.ProximaDosis).HasConversion(conversorFechaNullable);
+        });
     }
 
     private static void Tabla<T>(ModelBuilder b, string nombre) where T : class

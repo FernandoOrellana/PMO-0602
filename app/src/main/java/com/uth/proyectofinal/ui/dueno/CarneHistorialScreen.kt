@@ -1,6 +1,8 @@
 package com.uth.proyectofinal.ui.dueno
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -16,6 +18,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
@@ -32,6 +35,7 @@ import com.uth.proyectofinal.data.repository.MascotaRepository
 import com.uth.proyectofinal.ui.common.AppScaffold
 import com.uth.proyectofinal.ui.common.EmptyBox
 import com.uth.proyectofinal.ui.common.ErrorBox
+import com.uth.proyectofinal.ui.common.EstadoBadge
 import com.uth.proyectofinal.ui.common.LoadingBox
 import com.uth.proyectofinal.ui.common.OnResume
 import com.uth.proyectofinal.ui.common.SectionTitle
@@ -165,9 +169,19 @@ private fun ConsultaCard(c: Consulta) {
 @Composable
 private fun CitaCard(c: Cita) {
     Card(Modifier.fillMaxWidth().padding(vertical = 4.dp)) {
-        Column(Modifier.padding(12.dp)) {
-            Text("${c.fecha} ${c.hora} · ${c.servicio.nombre}", style = MaterialTheme.typography.titleSmall)
-            Text("Estado: ${c.estado} · Vet: ${c.veterinario.nombre}", style = MaterialTheme.typography.bodySmall)
+        Column(Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween,
+            ) {
+                Text("${c.fecha} ${c.hora} · ${c.servicio.nombre}", style = MaterialTheme.typography.titleSmall)
+                EstadoBadge(c.estado)
+            }
+            Text("Vet: ${c.veterinario.nombre}", style = MaterialTheme.typography.bodySmall)
+            c.consulta?.let { consulta ->
+                Text("Diagnóstico: ${consulta.diagnostico}", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.primary)
+            }
         }
     }
 }
