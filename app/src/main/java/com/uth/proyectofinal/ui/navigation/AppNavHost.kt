@@ -173,6 +173,7 @@ fun AppNavHost(container: AppContainer) {
             composable(Routes.HISTORIAL_CITAS, arguments = intArgs("id")) {
                 HistorialCitasMascotaScreen(
                     mascotaId = it.int("id"),
+                    rol = container.auth.user?.rol,
                     onBack = { nav.popBackStack() },
                 )
             }

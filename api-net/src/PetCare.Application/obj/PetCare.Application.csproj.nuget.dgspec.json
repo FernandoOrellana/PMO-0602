@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\abadc\\Desktop\\PMO-0602\\api-net\\src\\PetCare.Application\\PetCare.Application.csproj": {}
+    "/home/msi/Escritorio/local 2/PMO-0602/api-net/src/PetCare.Application/PetCare.Application.csproj": {}
   },
   "projects": {
-    "C:\\Users\\abadc\\Desktop\\PMO-0602\\api-net\\src\\PetCare.Application\\PetCare.Application.csproj": {
+    "/home/msi/Escritorio/local 2/PMO-0602/api-net/src/PetCare.Application/PetCare.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\abadc\\Desktop\\PMO-0602\\api-net\\src\\PetCare.Application\\PetCare.Application.csproj",
+        "projectUniqueName": "/home/msi/Escritorio/local 2/PMO-0602/api-net/src/PetCare.Application/PetCare.Application.csproj",
         "projectName": "PetCare.Application",
-        "projectPath": "C:\\Users\\abadc\\Desktop\\PMO-0602\\api-net\\src\\PetCare.Application\\PetCare.Application.csproj",
-        "packagesPath": "C:\\Users\\abadc\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\abadc\\Desktop\\PMO-0602\\api-net\\src\\PetCare.Application\\obj\\",
+        "projectPath": "/home/msi/Escritorio/local 2/PMO-0602/api-net/src/PetCare.Application/PetCare.Application.csproj",
+        "packagesPath": "/home/msi/.nuget/packages/",
+        "outputPath": "/home/msi/Escritorio/local 2/PMO-0602/api-net/src/PetCare.Application/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\abadc\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "/home/msi/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net10.0"
@@ -27,8 +27,8 @@
             "framework": "net10.0",
             "targetAlias": "net10.0",
             "projectReferences": {
-              "C:\\Users\\abadc\\Desktop\\PMO-0602\\api-net\\src\\PetCare.Domain\\PetCare.Domain.csproj": {
-                "projectPath": "C:\\Users\\abadc\\Desktop\\PMO-0602\\api-net\\src\\PetCare.Domain\\PetCare.Domain.csproj"
+              "/home/msi/Escritorio/local 2/PMO-0602/api-net/src/PetCare.Domain/PetCare.Domain.csproj": {
+                "projectPath": "/home/msi/Escritorio/local 2/PMO-0602/api-net/src/PetCare.Domain/PetCare.Domain.csproj"
               }
             }
           }
@@ -83,7 +83,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.403/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "/home/msi/.dotnet/sdk/10.0.404/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.CSharp": "(,4.7.32767]",
             "Microsoft.VisualBasic": "(,10.4.32767]",
@@ -361,17 +361,17 @@
         }
       }
     },
-    "C:\\Users\\abadc\\Desktop\\PMO-0602\\api-net\\src\\PetCare.Domain\\PetCare.Domain.csproj": {
+    "/home/msi/Escritorio/local 2/PMO-0602/api-net/src/PetCare.Domain/PetCare.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\abadc\\Desktop\\PMO-0602\\api-net\\src\\PetCare.Domain\\PetCare.Domain.csproj",
+        "projectUniqueName": "/home/msi/Escritorio/local 2/PMO-0602/api-net/src/PetCare.Domain/PetCare.Domain.csproj",
         "projectName": "PetCare.Domain",
-        "projectPath": "C:\\Users\\abadc\\Desktop\\PMO-0602\\api-net\\src\\PetCare.Domain\\PetCare.Domain.csproj",
-        "packagesPath": "C:\\Users\\abadc\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\abadc\\Desktop\\PMO-0602\\api-net\\src\\PetCare.Domain\\obj\\",
+        "projectPath": "/home/msi/Escritorio/local 2/PMO-0602/api-net/src/PetCare.Domain/PetCare.Domain.csproj",
+        "packagesPath": "/home/msi/.nuget/packages/",
+        "outputPath": "/home/msi/Escritorio/local 2/PMO-0602/api-net/src/PetCare.Domain/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\abadc\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "/home/msi/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net10.0"
@@ -418,7 +418,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.403/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "/home/msi/.dotnet/sdk/10.0.404/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.CSharp": "(,4.7.32767]",
             "Microsoft.VisualBasic": "(,10.4.32767]",

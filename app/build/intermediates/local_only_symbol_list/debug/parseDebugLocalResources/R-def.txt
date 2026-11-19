@@ -11,3 +11,4 @@ style Base.Theme.ProyectoFinal
 style Theme.ProyectoFinal
 xml backup_rules
 xml data_extraction_rules
+xml network_security_config

@@ -124,7 +124,7 @@ public class CitasService(
             {
                 CitaId = cita.Id,
                 MascotaId = cita.MascotaId,
-                VeterinarioId = actor.Id,
+                VeterinarioId = cita.VeterinarioId,
                 Fecha = cita.Fecha,
                 Diagnostico = "Consulta médica",
                 Observaciones = observaciones?.Trim(),
@@ -135,7 +135,7 @@ public class CitasService(
             }
             citas.AgregarConsulta(consulta);
             await uow.GuardarAsync(ct);
-            consulta.Veterinario = await veterinarios.PorIdAsync(actor.Id, ct) ?? cita.Veterinario;
+            consulta.Veterinario = cita.Veterinario;
             return mapeador.Consulta(consulta);
         }
     }

@@ -42,6 +42,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.uth.proyectofinal.data.remote.dto.Cita
 import com.uth.proyectofinal.data.remote.dto.Consulta
 import com.uth.proyectofinal.data.remote.dto.Mascota
+import com.uth.proyectofinal.data.remote.dto.Rol
 import com.uth.proyectofinal.data.repository.ApiResult
 import com.uth.proyectofinal.data.repository.CitaRepository
 import com.uth.proyectofinal.data.repository.MascotaRepository
@@ -118,12 +119,15 @@ class HistorialCitasViewModel(
 @Composable
 fun HistorialCitasMascotaScreen(
     mascotaId: Int,
+    rol: String? = null,
     onBack: () -> Unit,
 ) {
     val vm: HistorialCitasViewModel = viewModel(
         factory = appFactory { HistorialCitasViewModel(mascotaId, it.mascotas, it.citas) }
     )
     val ui by vm.ui.collectAsStateWithLifecycle()
+
+    val puedeEditarObservaciones = rol == Rol.VETERINARIO || rol == Rol.ADMINISTRADOR
 
     var citaParaObservacion by remember { mutableStateOf<Cita?>(null) }
     var textoObservacion by remember { mutableStateOf("") }
@@ -176,6 +180,7 @@ fun HistorialCitasMascotaScreen(
                         items(ui.citas, key = { it.id }) { cita ->
                             CitaHistorialCard(
                                 cita = cita,
+                                puedeEditarObservacion = puedeEditarObservaciones,
                                 onAgregarObservacion = {
                                     citaParaObservacion = it
                                     textoObservacion = it.consulta?.observaciones.orEmpty()
@@ -183,25 +188,27 @@ fun HistorialCitasMascotaScreen(
                             )
                         }
 
-                        item {
-                            Card(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(top = 8.dp),
-                                colors = CardDefaults.cardColors(
-                                    containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f)
-                                ),
-                            ) {
-                                Row(
-                                    modifier = Modifier.padding(16.dp),
-                                    verticalAlignment = Alignment.CenterVertically,
-                                    horizontalArrangement = Arrangement.spacedBy(12.dp),
+                        if (puedeEditarObservaciones) {
+                            item {
+                                Card(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(top = 8.dp),
+                                    colors = CardDefaults.cardColors(
+                                        containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f)
+                                    ),
                                 ) {
-                                    Text(
-                                        text = "💡 Puedes agregar o editar observaciones clínicas en cualquier cita del historial utilizando el botón al final de cada tarjeta.",
-                                        style = MaterialTheme.typography.bodySmall,
-                                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                    )
+                                    Row(
+                                        modifier = Modifier.padding(16.dp),
+                                        verticalAlignment = Alignment.CenterVertically,
+                                        horizontalArrangement = Arrangement.spacedBy(12.dp),
+                                    ) {
+                                        Text(
+                                            text = "💡 Puedes agregar o editar observaciones clínicas en cualquier cita del historial utilizando el botón al final de cada tarjeta.",
+                                            style = MaterialTheme.typography.bodySmall,
+                                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                        )
+                                    }
                                 }
                             }
                         }
@@ -314,6 +321,7 @@ private fun MascotaHeaderCard(m: Mascota) {
 @Composable
 private fun CitaHistorialCard(
     cita: Cita,
+    puedeEditarObservacion: Boolean,
     onAgregarObservacion: (Cita) -> Unit,
 ) {
     Card(
@@ -369,21 +377,23 @@ private fun CitaHistorialCard(
                 ConsultaDetalleBox(consulta)
             }
 
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 4.dp),
-                horizontalArrangement = Arrangement.End,
-            ) {
-                val tieneObs = !cita.consulta?.observaciones.isNullOrBlank()
-                OutlinedButton(
-                    onClick = { onAgregarObservacion(cita) },
-                    contentPadding = PaddingValues(horizontal = 14.dp, vertical = 6.dp),
+            if (puedeEditarObservacion) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 4.dp),
+                    horizontalArrangement = Arrangement.End,
                 ) {
-                    Text(
-                        text = if (tieneObs) "✏️ Editar observación" else "+ Agregar observación",
-                        style = MaterialTheme.typography.labelMedium,
-                    )
+                    val tieneObs = !cita.consulta?.observaciones.isNullOrBlank()
+                    OutlinedButton(
+                        onClick = { onAgregarObservacion(cita) },
+                        contentPadding = PaddingValues(horizontal = 14.dp, vertical = 6.dp),
+                    ) {
+                        Text(
+                            text = if (tieneObs) "✏️ Editar observación" else "+ Agregar observación",
+                            style = MaterialTheme.typography.labelMedium,
+                        )
+                    }
                 }
             }
         }
