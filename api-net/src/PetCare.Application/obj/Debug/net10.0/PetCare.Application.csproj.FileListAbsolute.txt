@@ -1,0 +1,15 @@
+/home/msi/AndroidStudioProjects/ProyectoFinal/api-net/src/PetCare.Application/bin/Debug/net10.0/PetCare.Application.deps.json
+/home/msi/AndroidStudioProjects/ProyectoFinal/api-net/src/PetCare.Application/bin/Debug/net10.0/PetCare.Application.dll
+/home/msi/AndroidStudioProjects/ProyectoFinal/api-net/src/PetCare.Application/bin/Debug/net10.0/PetCare.Application.pdb
+/home/msi/AndroidStudioProjects/ProyectoFinal/api-net/src/PetCare.Application/bin/Debug/net10.0/PetCare.Domain.dll
+/home/msi/AndroidStudioProjects/ProyectoFinal/api-net/src/PetCare.Application/bin/Debug/net10.0/PetCare.Domain.pdb
+/home/msi/AndroidStudioProjects/ProyectoFinal/api-net/src/PetCare.Application/obj/Debug/net10.0/PetCare.Application.csproj.AssemblyReference.cache
+/home/msi/AndroidStudioProjects/ProyectoFinal/api-net/src/PetCare.Application/obj/Debug/net10.0/PetCare.Application.GeneratedMSBuildEditorConfig.editorconfig
+/home/msi/AndroidStudioProjects/ProyectoFinal/api-net/src/PetCare.Application/obj/Debug/net10.0/PetCare.Application.AssemblyInfoInputs.cache
+/home/msi/AndroidStudioProjects/ProyectoFinal/api-net/src/PetCare.Application/obj/Debug/net10.0/PetCare.Application.AssemblyInfo.cs
+/home/msi/AndroidStudioProjects/ProyectoFinal/api-net/src/PetCare.Application/obj/Debug/net10.0/PetCare.Application.csproj.CoreCompileInputs.cache
+/home/msi/AndroidStudioProjects/ProyectoFinal/api-net/src/PetCare.Application/obj/Debug/net10.0/PetCare..1567D0D2.Up2Date
+/home/msi/AndroidStudioProjects/ProyectoFinal/api-net/src/PetCare.Application/obj/Debug/net10.0/PetCare.Application.dll
+/home/msi/AndroidStudioProjects/ProyectoFinal/api-net/src/PetCare.Application/obj/Debug/net10.0/refint/PetCare.Application.dll
+/home/msi/AndroidStudioProjects/ProyectoFinal/api-net/src/PetCare.Application/obj/Debug/net10.0/PetCare.Application.pdb
+/home/msi/AndroidStudioProjects/ProyectoFinal/api-net/src/PetCare.Application/obj/Debug/net10.0/ref/PetCare.Application.dll
