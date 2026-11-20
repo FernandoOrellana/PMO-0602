@@ -104,4 +104,17 @@ public class CitasServiceTests
         _citas.Verify(c => c.AgregarConsulta(It.Is<Consulta>(con => con.Observaciones == "Observacion inicial" && con.CitaId == 8)), Times.Once);
         _uow.Verify(u => u.GuardarAsync(It.IsAny<CancellationToken>()), Times.Once);
     }
+
+    [Fact]
+    public async Task ActualizarObservaciones_AdministradorNoQuedaComoVeterinarioDeLaConsulta()
+    {
+        var cita = new Cita { Id = 9, MascotaId = 1, Fecha = new DateOnly(2030, 1, 1), Mascota = Datos.Mascota(1, 5), Servicio = Datos.Servicio(), Veterinario = Datos.Usuario(3, Roles.Veterinario), VeterinarioId = 3, Estado = EstadoCita.CONFIRMADA };
+
+        _citas.Setup(c => c.PorIdAsync(9, It.IsAny<CancellationToken>())).ReturnsAsync(cita);
+        _citas.Setup(c => c.ConsultaPorCitaAsync(9, It.IsAny<CancellationToken>())).ReturnsAsync((Consulta?)null);
+
+        await Crear().ActualizarObservacionesAsync(new Actor(1, Roles.Administrador), 9, "Nota del admin", default);
+
+        _citas.Verify(c => c.AgregarConsulta(It.Is<Consulta>(con => con.VeterinarioId == 3 && con.Observaciones == "Nota del admin")), Times.Once);
+    }
 }

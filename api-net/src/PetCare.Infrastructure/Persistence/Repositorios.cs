@@ -221,6 +221,15 @@ public class NotificacionRepositorio(PetCareDbContext db) : INotificacionReposit
         if (existente is null) db.Dispositivos.Add(new Dispositivo { UsuarioId = usuarioId, FcmToken = fcmToken });
         else existente.UsuarioId = usuarioId;
     }
+
+    public async Task EliminarDispositivosAsync(IReadOnlyList<string> fcmTokens, CancellationToken ct)
+    {
+        foreach (var token in fcmTokens.Distinct())
+        {
+            var dispositivo = await db.Dispositivos.FirstOrDefaultAsync(d => d.FcmToken == token, ct);
+            if (dispositivo is not null) db.Dispositivos.Remove(dispositivo);
+        }
+    }
 }
 
 public class ReporteRepositorio(PetCareDbContext db) : IReporteRepositorio

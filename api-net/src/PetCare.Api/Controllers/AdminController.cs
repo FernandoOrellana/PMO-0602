@@ -14,6 +14,7 @@ namespace PetCare.Api.Controllers;
 [Authorize(Roles = Roles.Administrador)]
 public class AdminController(
     AdminService admin,
+    RecordatoriosService recordatorios,
     IValidator<ProductoRequest> vProducto,
     IValidator<ServicioRequest> vServicio,
     IValidator<VeterinarioCrearRequest> vVetCrear,
@@ -92,4 +93,8 @@ public class AdminController(
     [HttpGet("reportes/citas")]
     public async Task<IActionResult> Citas([FromQuery] DateOnly? desde, [FromQuery] DateOnly? hasta, CancellationToken ct) =>
         Respuesta(await admin.ReporteCitasAsync(desde, hasta, ct));
+
+    [HttpPost("recordatorios/ejecutar")]
+    public async Task<IActionResult> EjecutarRecordatorios(CancellationToken ct) =>
+        Respuesta(await recordatorios.EjecutarAsync(ct));
 }

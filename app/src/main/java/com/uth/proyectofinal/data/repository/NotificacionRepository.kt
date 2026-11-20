@@ -9,6 +9,8 @@ class NotificacionRepository(private val api: ApiService) {
 
     suspend fun marcarLeida(id: Int) = apiCall { api.leerNotificacion(id) }
 
+    suspend fun probar() = apiCall { api.probarNotificacion() }
+
     suspend fun registrarDispositivo(fcmToken: String) =
         apiCall { api.registrarDispositivo(DeviceRequest(fcmToken)) }.map { }
 }

@@ -42,14 +42,14 @@ public class RecordatoriosServiceTests
         Assert.True(vacuna.RecordatorioEnviado);
         Assert.True(cita.RecordatorioEnviado);
         _notificaciones.Verify(n => n.Agregar(It.IsAny<Notificacion>()), Times.Exactly(2));
-        _push.Verify(p => p.EnviarAsync(It.Is<IReadOnlyList<string>>(t => t.Single() == "fcm-1"), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CancellationToken>()), Times.Exactly(2));
+        _push.Verify(p => p.EnviarAsync(It.Is<IReadOnlyList<string>>(t => t.Single() == "fcm-1"), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<IReadOnlyDictionary<string, string>>(), It.IsAny<CancellationToken>()), Times.Exactly(2));
     }
 
     [Fact]
     public async Task Ejecutar_UnFalloDePushNoDetieneLosDemasAvisos()
     {
         ConfigurarDatos();
-        _push.Setup(p => p.EnviarAsync(It.IsAny<IReadOnlyList<string>>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
+        _push.Setup(p => p.EnviarAsync(It.IsAny<IReadOnlyList<string>>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<IReadOnlyDictionary<string, string>>(), It.IsAny<CancellationToken>()))
             .ThrowsAsync(new InvalidOperationException("FCM caído"));
 
         var resultado = await Crear().EjecutarAsync(default);

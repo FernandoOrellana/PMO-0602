@@ -30,9 +30,12 @@ public interface INotificadorCorreo
     Task EnviarClaveTemporalAsync(string email, string clave, CancellationToken ct);
 }
 
+public record ResultadoPush(int Enviados, IReadOnlyList<string> Invalidos);
+
 public interface IPushSender
 {
-    Task EnviarAsync(IReadOnlyList<string> tokens, string titulo, string mensaje, CancellationToken ct);
+    Task<ResultadoPush> EnviarAsync(IReadOnlyList<string> tokens, string titulo, string mensaje,
+        IReadOnlyDictionary<string, string> data, CancellationToken ct);
 }
 
 public interface IAlmacenArchivos

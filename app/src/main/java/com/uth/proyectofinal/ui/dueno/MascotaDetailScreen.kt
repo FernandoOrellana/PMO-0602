@@ -1,8 +1,5 @@
 package com.uth.proyectofinal.ui.dueno
 
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.PickVisualMediaRequest
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -45,6 +42,7 @@ import com.uth.proyectofinal.ui.common.AppScaffold
 import com.uth.proyectofinal.ui.common.ConfirmDialog
 import com.uth.proyectofinal.ui.common.EditIcon
 import com.uth.proyectofinal.ui.common.ErrorBox
+import com.uth.proyectofinal.ui.common.FotoSelector
 import com.uth.proyectofinal.ui.common.LoadingBox
 import com.uth.proyectofinal.ui.common.MessageViewModel
 import com.uth.proyectofinal.ui.common.OnResume
@@ -129,12 +127,6 @@ fun MascotaDetailScreen(
 
     OnResume { vm.cargar() }
 
-    val picker = rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
-        if (uri != null) {
-            scope.launch { vm.subirFoto(context.imagenPart(uri, "foto")) }
-        }
-    }
-
     LaunchedEffect(ui.eliminada) {
         if (ui.eliminada) onDeleted()
     }
@@ -180,13 +172,10 @@ fun MascotaDetailScreen(
                         }
                     }
                     if (esDueno) {
-                        OutlinedButton(
-                            onClick = {
-                                picker.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
-                            },
+                        FotoSelector(
                             enabled = !ui.ocupado,
-                            modifier = Modifier.fillMaxWidth(),
-                        ) { Text("Cambiar foto") }
+                            onFoto = { uri -> scope.launch { vm.subirFoto(context.imagenPart(uri, "foto")) } },
+                        )
                     }
 
                     Text("Especie: ${m.especie?.nombre.orEmpty()}", style = MaterialTheme.typography.bodyLarge)

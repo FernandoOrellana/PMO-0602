@@ -7548,6 +7548,25 @@
                     }
                 },
                 {
+                    "source": "/home/msi/Escritorio/local 2/PMO-0602/app/src/main/res/values/themes.xml",
+                    "from": {
+                        "startLines": "2,7",
+                        "startColumns": "4,4",
+                        "startOffsets": "100,328",
+                        "endLines": "5,7",
+                        "endColumns": "12,74",
+                        "endOffsets": "322,398"
+                    },
+                    "to": {
+                        "startLines": "2674,6663",
+                        "startColumns": "4,4",
+                        "startOffsets": "188280,467999",
+                        "endLines": "2677,6663",
+                        "endColumns": "12,73",
+                        "endOffsets": "188396,468068"
+                    }
+                },
+                {
                     "source": "/home/msi/.gradle/caches/9.6.0/transforms/252c53ff33680201053dce6b656f6f6d/transformed/foundation/res/values/values.xml",
                     "from": {
                         "startLines": "2,3,4,5",
@@ -7726,39 +7745,20 @@
                     }
                 },
                 {
-                    "source": "/home/msi/AndroidStudioProjects/ProyectoFinal/app/src/main/res/values/themes.xml",
+                    "source": "/home/msi/Escritorio/local 2/PMO-0602/app/src/main/res/values/strings.xml",
                     "from": {
-                        "startLines": "2,7",
-                        "startColumns": "4,4",
-                        "startOffsets": "100,328",
-                        "endLines": "5,7",
-                        "endColumns": "12,74",
-                        "endOffsets": "322,398"
+                        "startLines": "1",
+                        "startColumns": "4",
+                        "startOffsets": "16",
+                        "endColumns": "50",
+                        "endOffsets": "62"
                     },
                     "to": {
-                        "startLines": "2674,6663",
-                        "startColumns": "4,4",
-                        "startOffsets": "188280,467999",
-                        "endLines": "2677,6663",
-                        "endColumns": "12,73",
-                        "endOffsets": "188396,468068"
-                    }
-                },
-                {
-                    "source": "/home/msi/AndroidStudioProjects/ProyectoFinal/app/src/main/res/values/colors.xml",
-                    "from": {
-                        "startLines": "2,3",
-                        "startColumns": "4,4",
-                        "startOffsets": "55,97",
-                        "endColumns": "41,41",
-                        "endOffsets": "92,134"
-                    },
-                    "to": {
-                        "startLines": "632,959",
-                        "startColumns": "4,4",
-                        "startOffsets": "31385,55783",
-                        "endColumns": "41,41",
-                        "endOffsets": "31422,55820"
+                        "startLines": "1989",
+                        "startColumns": "4",
+                        "startOffsets": "130935",
+                        "endColumns": "50",
+                        "endOffsets": "130981"
                     }
                 },
                 {
@@ -7831,23 +7831,6 @@
                         "startOffsets": "119688,119728,121139,121430,121485,123095,123149,123201,123250,123311",
                         "endColumns": "39,46,42,54,46,53,51,48,60,49",
                         "endOffsets": "119723,119770,121177,121480,121527,123144,123196,123245,123306,123356"
-                    }
-                },
-                {
-                    "source": "/home/msi/AndroidStudioProjects/ProyectoFinal/app/src/main/res/values/strings.xml",
-                    "from": {
-                        "startLines": "1",
-                        "startColumns": "4",
-                        "startOffsets": "16",
-                        "endColumns": "50",
-                        "endOffsets": "62"
-                    },
-                    "to": {
-                        "startLines": "1989",
-                        "startColumns": "4",
-                        "startOffsets": "130935",
-                        "endColumns": "50",
-                        "endOffsets": "130981"
                     }
                 },
                 {
@@ -8028,6 +8011,23 @@
                         "startOffsets": "123648",
                         "endColumns": "53",
                         "endOffsets": "123697"
+                    }
+                },
+                {
+                    "source": "/home/msi/Escritorio/local 2/PMO-0602/app/src/main/res/values/colors.xml",
+                    "from": {
+                        "startLines": "2,3",
+                        "startColumns": "4,4",
+                        "startOffsets": "55,97",
+                        "endColumns": "41,41",
+                        "endOffsets": "92,134"
+                    },
+                    "to": {
+                        "startLines": "632,959",
+                        "startColumns": "4,4",
+                        "startOffsets": "31385,55783",
+                        "endColumns": "41,41",
+                        "endOffsets": "31422,55820"
                     }
                 },
                 {
@@ -11347,7 +11347,7 @@
             "outputFile": "com.uth.proyectofinal.app-debug-62:/values-night-v8_values-night-v8.arsc.flat",
             "map": [
                 {
-                    "source": "/home/msi/AndroidStudioProjects/ProyectoFinal/app/src/main/res/values-night/themes.xml",
+                    "source": "/home/msi/Escritorio/local 2/PMO-0602/app/src/main/res/values-night/themes.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

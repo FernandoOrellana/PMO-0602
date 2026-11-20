@@ -54,3 +54,209 @@ Unhandled exception. System.IO.IOException: Failed to bind to address http://0.0
    at Microsoft.Extensions.Hosting.HostingAbstractionsHostExtensions.Run(IHost host)
    at Program.<Main>$(String[] args) in /root/proyectos/api-net/src/PetCare.Api/Program.cs:line 125
    at Program.<Main>(String[] args)
+info: Microsoft.Hosting.Lifetime[14]
+      Now listening on: http://0.0.0.0:5000
+info: Microsoft.Hosting.Lifetime[0]
+      Application started. Press Ctrl+C to shut down.
+info: Microsoft.Hosting.Lifetime[0]
+      Hosting environment: Production
+info: Microsoft.Hosting.Lifetime[0]
+      Content root path: /home/msi/Escritorio/local 2/PMO-0602/petcare-publish
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (9ms) [Parameters=[@f_VeterinarioId='?' (DbType = Int32), @f_Fecha='?' (DbType = DateTime)], CommandType='Text', CommandTimeout='30']
+      SELECT COUNT(*)
+      FROM `citas` AS `c`
+      WHERE (`c`.`veterinario_id` = @f_VeterinarioId) AND (`c`.`fecha` = @f_Fecha)
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (5ms) [Parameters=[@f_VeterinarioId='?' (DbType = Int32), @f_Fecha='?' (DbType = DateTime), @p3='?' (DbType = Int32), @p='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+      SELECT `c0`.`id`, `c0`.`estado`, `c0`.`fecha`, `c0`.`hora`, `c0`.`mascota_id`, `c0`.`recordatorio_enviado`, `c0`.`servicio_id`, `c0`.`veterinario_id`, `m`.`id`, `m`.`activo`, `m`.`dueno_id`, `m`.`especie_id`, `m`.`fecha_nacimiento`, `m`.`foto_ruta`, `m`.`nombre`, `m`.`peso_kg`, `m`.`raza`, `u`.`id`, `u`.`activo`, `u`.`clave_temporal_expira`, `u`.`clave_temporal_hash`, `u`.`codigo_expira`, `u`.`codigo_verificacion_hash`, `u`.`created_at`, `u`.`email`, `u`.`email_verificado`, `u`.`nombre`, `u`.`password_hash`, `u`.`rol_id`, `u`.`telefono`, `s`.`id`, `s`.`activo`, `s`.`duracion_min`, `s`.`nombre`, `s`.`precio`, `u0`.`id`, `u0`.`activo`, `u0`.`clave_temporal_expira`, `u0`.`clave_temporal_hash`, `u0`.`codigo_expira`, `u0`.`codigo_verificacion_hash`, `u0`.`created_at`, `u0`.`email`, `u0`.`email_verificado`, `u0`.`nombre`, `u0`.`password_hash`, `u0`.`rol_id`, `u0`.`telefono`
+      FROM (
+          SELECT `c`.`id`, `c`.`estado`, `c`.`fecha`, `c`.`hora`, `c`.`mascota_id`, `c`.`recordatorio_enviado`, `c`.`servicio_id`, `c`.`veterinario_id`
+          FROM `citas` AS `c`
+          WHERE (`c`.`veterinario_id` = @f_VeterinarioId) AND (`c`.`fecha` = @f_Fecha)
+          ORDER BY `c`.`fecha`, `c`.`hora`
+          LIMIT @p3 OFFSET @p
+      ) AS `c0`
+      INNER JOIN `mascotas` AS `m` ON `c0`.`mascota_id` = `m`.`id`
+      INNER JOIN `usuarios` AS `u` ON `m`.`dueno_id` = `u`.`id`
+      INNER JOIN `servicios` AS `s` ON `c0`.`servicio_id` = `s`.`id`
+      INNER JOIN `usuarios` AS `u0` ON `c0`.`veterinario_id` = `u0`.`id`
+      ORDER BY `c0`.`fecha`, `c0`.`hora`
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (9ms) [Parameters=[@id='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+      SELECT `c`.`id`, `c`.`estado`, `c`.`fecha`, `c`.`hora`, `c`.`mascota_id`, `c`.`recordatorio_enviado`, `c`.`servicio_id`, `c`.`veterinario_id`, `m`.`id`, `m`.`activo`, `m`.`dueno_id`, `m`.`especie_id`, `m`.`fecha_nacimiento`, `m`.`foto_ruta`, `m`.`nombre`, `m`.`peso_kg`, `m`.`raza`, `u`.`id`, `u`.`activo`, `u`.`clave_temporal_expira`, `u`.`clave_temporal_hash`, `u`.`codigo_expira`, `u`.`codigo_verificacion_hash`, `u`.`created_at`, `u`.`email`, `u`.`email_verificado`, `u`.`nombre`, `u`.`password_hash`, `u`.`rol_id`, `u`.`telefono`, `s`.`id`, `s`.`activo`, `s`.`duracion_min`, `s`.`nombre`, `s`.`precio`, `u0`.`id`, `u0`.`activo`, `u0`.`clave_temporal_expira`, `u0`.`clave_temporal_hash`, `u0`.`codigo_expira`, `u0`.`codigo_verificacion_hash`, `u0`.`created_at`, `u0`.`email`, `u0`.`email_verificado`, `u0`.`nombre`, `u0`.`password_hash`, `u0`.`rol_id`, `u0`.`telefono`
+      FROM `citas` AS `c`
+      INNER JOIN `mascotas` AS `m` ON `c`.`mascota_id` = `m`.`id`
+      INNER JOIN `usuarios` AS `u` ON `m`.`dueno_id` = `u`.`id`
+      INNER JOIN `servicios` AS `s` ON `c`.`servicio_id` = `s`.`id`
+      INNER JOIN `usuarios` AS `u0` ON `c`.`veterinario_id` = `u0`.`id`
+      WHERE `c`.`id` = @id
+      LIMIT 1
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (8ms) [Parameters=[@id='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+      SELECT `m`.`id`, `m`.`activo`, `m`.`dueno_id`, `m`.`especie_id`, `m`.`fecha_nacimiento`, `m`.`foto_ruta`, `m`.`nombre`, `m`.`peso_kg`, `m`.`raza`, `e`.`id`, `e`.`nombre`, `u`.`id`, `u`.`activo`, `u`.`clave_temporal_expira`, `u`.`clave_temporal_hash`, `u`.`codigo_expira`, `u`.`codigo_verificacion_hash`, `u`.`created_at`, `u`.`email`, `u`.`email_verificado`, `u`.`nombre`, `u`.`password_hash`, `u`.`rol_id`, `u`.`telefono`
+      FROM `mascotas` AS `m`
+      INNER JOIN `especies` AS `e` ON `m`.`especie_id` = `e`.`id`
+      INNER JOIN `usuarios` AS `u` ON `m`.`dueno_id` = `u`.`id`
+      WHERE `m`.`id` = @id
+      LIMIT 1
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (5ms) [Parameters=[@id='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+      SELECT `m`.`id`, `m`.`activo`, `m`.`dueno_id`, `m`.`especie_id`, `m`.`fecha_nacimiento`, `m`.`foto_ruta`, `m`.`nombre`, `m`.`peso_kg`, `m`.`raza`, `e`.`id`, `e`.`nombre`, `u`.`id`, `u`.`activo`, `u`.`clave_temporal_expira`, `u`.`clave_temporal_hash`, `u`.`codigo_expira`, `u`.`codigo_verificacion_hash`, `u`.`created_at`, `u`.`email`, `u`.`email_verificado`, `u`.`nombre`, `u`.`password_hash`, `u`.`rol_id`, `u`.`telefono`
+      FROM `mascotas` AS `m`
+      INNER JOIN `especies` AS `e` ON `m`.`especie_id` = `e`.`id`
+      INNER JOIN `usuarios` AS `u` ON `m`.`dueno_id` = `u`.`id`
+      WHERE `m`.`id` = @id
+      LIMIT 1
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (5ms) [Parameters=[@mascotaId='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+      SELECT `c`.`id`, `c`.`cita_id`, `c`.`diagnostico`, `c`.`fecha`, `c`.`mascota_id`, `c`.`observaciones`, `c`.`peso_kg`, `c`.`tratamiento`, `c`.`veterinario_id`, `u`.`id`, `u`.`activo`, `u`.`clave_temporal_expira`, `u`.`clave_temporal_hash`, `u`.`codigo_expira`, `u`.`codigo_verificacion_hash`, `u`.`created_at`, `u`.`email`, `u`.`email_verificado`, `u`.`nombre`, `u`.`password_hash`, `u`.`rol_id`, `u`.`telefono`
+      FROM `consultas` AS `c`
+      INNER JOIN `usuarios` AS `u` ON `c`.`veterinario_id` = `u`.`id`
+      WHERE `c`.`mascota_id` = @mascotaId
+      ORDER BY `c`.`fecha` DESC
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (5ms) [Parameters=[@mascotaId='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+      SELECT `c`.`id`, `c`.`estado`, `c`.`fecha`, `c`.`hora`, `c`.`mascota_id`, `c`.`recordatorio_enviado`, `c`.`servicio_id`, `c`.`veterinario_id`, `m`.`id`, `m`.`activo`, `m`.`dueno_id`, `m`.`especie_id`, `m`.`fecha_nacimiento`, `m`.`foto_ruta`, `m`.`nombre`, `m`.`peso_kg`, `m`.`raza`, `u`.`id`, `u`.`activo`, `u`.`clave_temporal_expira`, `u`.`clave_temporal_hash`, `u`.`codigo_expira`, `u`.`codigo_verificacion_hash`, `u`.`created_at`, `u`.`email`, `u`.`email_verificado`, `u`.`nombre`, `u`.`password_hash`, `u`.`rol_id`, `u`.`telefono`, `s`.`id`, `s`.`activo`, `s`.`duracion_min`, `s`.`nombre`, `s`.`precio`, `u0`.`id`, `u0`.`activo`, `u0`.`clave_temporal_expira`, `u0`.`clave_temporal_hash`, `u0`.`codigo_expira`, `u0`.`codigo_verificacion_hash`, `u0`.`created_at`, `u0`.`email`, `u0`.`email_verificado`, `u0`.`nombre`, `u0`.`password_hash`, `u0`.`rol_id`, `u0`.`telefono`
+      FROM `citas` AS `c`
+      INNER JOIN `mascotas` AS `m` ON `c`.`mascota_id` = `m`.`id`
+      INNER JOIN `usuarios` AS `u` ON `m`.`dueno_id` = `u`.`id`
+      INNER JOIN `servicios` AS `s` ON `c`.`servicio_id` = `s`.`id`
+      INNER JOIN `usuarios` AS `u0` ON `c`.`veterinario_id` = `u0`.`id`
+      WHERE `c`.`mascota_id` = @mascotaId
+      ORDER BY `c`.`fecha` DESC, `c`.`hora` DESC
+info: Microsoft.Hosting.Lifetime[0]
+      Application is shutting down...
+info: Microsoft.Hosting.Lifetime[14]
+      Now listening on: http://0.0.0.0:5000
+info: Microsoft.Hosting.Lifetime[0]
+      Application started. Press Ctrl+C to shut down.
+info: Microsoft.Hosting.Lifetime[0]
+      Hosting environment: Production
+info: Microsoft.Hosting.Lifetime[0]
+      Content root path: /home/msi/Escritorio/local 2/PMO-0602/petcare-publish
+info: Microsoft.Hosting.Lifetime[0]
+      Application is shutting down...
+info: Microsoft.Hosting.Lifetime[14]
+      Now listening on: http://0.0.0.0:5000
+info: Microsoft.Hosting.Lifetime[0]
+      Application started. Press Ctrl+C to shut down.
+info: Microsoft.Hosting.Lifetime[0]
+      Hosting environment: Production
+info: Microsoft.Hosting.Lifetime[0]
+      Content root path: /home/msi/Escritorio/local 2/PMO-0602/petcare-publish
+info: Microsoft.Hosting.Lifetime[0]
+      Application is shutting down...
+info: Microsoft.Hosting.Lifetime[14]
+      Now listening on: http://0.0.0.0:5000
+info: Microsoft.Hosting.Lifetime[0]
+      Application started. Press Ctrl+C to shut down.
+info: Microsoft.Hosting.Lifetime[0]
+      Hosting environment: Production
+info: Microsoft.Hosting.Lifetime[0]
+      Content root path: /home/msi/Escritorio/local 2/PMO-0602/petcare-publish
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (11ms) [Parameters=[@f_VeterinarioId='?' (DbType = Int32), @f_Fecha='?' (DbType = DateTime)], CommandType='Text', CommandTimeout='30']
+      SELECT COUNT(*)
+      FROM `citas` AS `c`
+      WHERE (`c`.`veterinario_id` = @f_VeterinarioId) AND (`c`.`fecha` = @f_Fecha)
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (6ms) [Parameters=[@f_VeterinarioId='?' (DbType = Int32), @f_Fecha='?' (DbType = DateTime), @p3='?' (DbType = Int32), @p='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+      SELECT `c0`.`id`, `c0`.`estado`, `c0`.`fecha`, `c0`.`hora`, `c0`.`mascota_id`, `c0`.`recordatorio_enviado`, `c0`.`servicio_id`, `c0`.`veterinario_id`, `m`.`id`, `m`.`activo`, `m`.`dueno_id`, `m`.`especie_id`, `m`.`fecha_nacimiento`, `m`.`foto_ruta`, `m`.`nombre`, `m`.`peso_kg`, `m`.`raza`, `u`.`id`, `u`.`activo`, `u`.`clave_temporal_expira`, `u`.`clave_temporal_hash`, `u`.`codigo_expira`, `u`.`codigo_verificacion_hash`, `u`.`created_at`, `u`.`email`, `u`.`email_verificado`, `u`.`nombre`, `u`.`password_hash`, `u`.`rol_id`, `u`.`telefono`, `s`.`id`, `s`.`activo`, `s`.`duracion_min`, `s`.`nombre`, `s`.`precio`, `u0`.`id`, `u0`.`activo`, `u0`.`clave_temporal_expira`, `u0`.`clave_temporal_hash`, `u0`.`codigo_expira`, `u0`.`codigo_verificacion_hash`, `u0`.`created_at`, `u0`.`email`, `u0`.`email_verificado`, `u0`.`nombre`, `u0`.`password_hash`, `u0`.`rol_id`, `u0`.`telefono`
+      FROM (
+          SELECT `c`.`id`, `c`.`estado`, `c`.`fecha`, `c`.`hora`, `c`.`mascota_id`, `c`.`recordatorio_enviado`, `c`.`servicio_id`, `c`.`veterinario_id`
+          FROM `citas` AS `c`
+          WHERE (`c`.`veterinario_id` = @f_VeterinarioId) AND (`c`.`fecha` = @f_Fecha)
+          ORDER BY `c`.`fecha`, `c`.`hora`
+          LIMIT @p3 OFFSET @p
+      ) AS `c0`
+      INNER JOIN `mascotas` AS `m` ON `c0`.`mascota_id` = `m`.`id`
+      INNER JOIN `usuarios` AS `u` ON `m`.`dueno_id` = `u`.`id`
+      INNER JOIN `servicios` AS `s` ON `c0`.`servicio_id` = `s`.`id`
+      INNER JOIN `usuarios` AS `u0` ON `c0`.`veterinario_id` = `u0`.`id`
+      ORDER BY `c0`.`fecha`, `c0`.`hora`
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (5ms) [Parameters=[@id='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+      SELECT `c`.`id`, `c`.`estado`, `c`.`fecha`, `c`.`hora`, `c`.`mascota_id`, `c`.`recordatorio_enviado`, `c`.`servicio_id`, `c`.`veterinario_id`, `m`.`id`, `m`.`activo`, `m`.`dueno_id`, `m`.`especie_id`, `m`.`fecha_nacimiento`, `m`.`foto_ruta`, `m`.`nombre`, `m`.`peso_kg`, `m`.`raza`, `u`.`id`, `u`.`activo`, `u`.`clave_temporal_expira`, `u`.`clave_temporal_hash`, `u`.`codigo_expira`, `u`.`codigo_verificacion_hash`, `u`.`created_at`, `u`.`email`, `u`.`email_verificado`, `u`.`nombre`, `u`.`password_hash`, `u`.`rol_id`, `u`.`telefono`, `s`.`id`, `s`.`activo`, `s`.`duracion_min`, `s`.`nombre`, `s`.`precio`, `u0`.`id`, `u0`.`activo`, `u0`.`clave_temporal_expira`, `u0`.`clave_temporal_hash`, `u0`.`codigo_expira`, `u0`.`codigo_verificacion_hash`, `u0`.`created_at`, `u0`.`email`, `u0`.`email_verificado`, `u0`.`nombre`, `u0`.`password_hash`, `u0`.`rol_id`, `u0`.`telefono`
+      FROM `citas` AS `c`
+      INNER JOIN `mascotas` AS `m` ON `c`.`mascota_id` = `m`.`id`
+      INNER JOIN `usuarios` AS `u` ON `m`.`dueno_id` = `u`.`id`
+      INNER JOIN `servicios` AS `s` ON `c`.`servicio_id` = `s`.`id`
+      INNER JOIN `usuarios` AS `u0` ON `c`.`veterinario_id` = `u0`.`id`
+      WHERE `c`.`id` = @id
+      LIMIT 1
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (5ms) [Parameters=[@id='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+      SELECT `m`.`id`, `m`.`activo`, `m`.`dueno_id`, `m`.`especie_id`, `m`.`fecha_nacimiento`, `m`.`foto_ruta`, `m`.`nombre`, `m`.`peso_kg`, `m`.`raza`, `e`.`id`, `e`.`nombre`, `u`.`id`, `u`.`activo`, `u`.`clave_temporal_expira`, `u`.`clave_temporal_hash`, `u`.`codigo_expira`, `u`.`codigo_verificacion_hash`, `u`.`created_at`, `u`.`email`, `u`.`email_verificado`, `u`.`nombre`, `u`.`password_hash`, `u`.`rol_id`, `u`.`telefono`
+      FROM `mascotas` AS `m`
+      INNER JOIN `especies` AS `e` ON `m`.`especie_id` = `e`.`id`
+      INNER JOIN `usuarios` AS `u` ON `m`.`dueno_id` = `u`.`id`
+      WHERE `m`.`id` = @id
+      LIMIT 1
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (5ms) [Parameters=[@id='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+      SELECT `m`.`id`, `m`.`activo`, `m`.`dueno_id`, `m`.`especie_id`, `m`.`fecha_nacimiento`, `m`.`foto_ruta`, `m`.`nombre`, `m`.`peso_kg`, `m`.`raza`, `e`.`id`, `e`.`nombre`, `u`.`id`, `u`.`activo`, `u`.`clave_temporal_expira`, `u`.`clave_temporal_hash`, `u`.`codigo_expira`, `u`.`codigo_verificacion_hash`, `u`.`created_at`, `u`.`email`, `u`.`email_verificado`, `u`.`nombre`, `u`.`password_hash`, `u`.`rol_id`, `u`.`telefono`
+      FROM `mascotas` AS `m`
+      INNER JOIN `especies` AS `e` ON `m`.`especie_id` = `e`.`id`
+      INNER JOIN `usuarios` AS `u` ON `m`.`dueno_id` = `u`.`id`
+      WHERE `m`.`id` = @id
+      LIMIT 1
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (5ms) [Parameters=[@mascotaId='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+      SELECT `c`.`id`, `c`.`cita_id`, `c`.`diagnostico`, `c`.`fecha`, `c`.`mascota_id`, `c`.`observaciones`, `c`.`peso_kg`, `c`.`tratamiento`, `c`.`veterinario_id`, `u`.`id`, `u`.`activo`, `u`.`clave_temporal_expira`, `u`.`clave_temporal_hash`, `u`.`codigo_expira`, `u`.`codigo_verificacion_hash`, `u`.`created_at`, `u`.`email`, `u`.`email_verificado`, `u`.`nombre`, `u`.`password_hash`, `u`.`rol_id`, `u`.`telefono`
+      FROM `consultas` AS `c`
+      INNER JOIN `usuarios` AS `u` ON `c`.`veterinario_id` = `u`.`id`
+      WHERE `c`.`mascota_id` = @mascotaId
+      ORDER BY `c`.`fecha` DESC
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (9ms) [Parameters=[@mascotaId='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+      SELECT `c`.`id`, `c`.`estado`, `c`.`fecha`, `c`.`hora`, `c`.`mascota_id`, `c`.`recordatorio_enviado`, `c`.`servicio_id`, `c`.`veterinario_id`, `m`.`id`, `m`.`activo`, `m`.`dueno_id`, `m`.`especie_id`, `m`.`fecha_nacimiento`, `m`.`foto_ruta`, `m`.`nombre`, `m`.`peso_kg`, `m`.`raza`, `u`.`id`, `u`.`activo`, `u`.`clave_temporal_expira`, `u`.`clave_temporal_hash`, `u`.`codigo_expira`, `u`.`codigo_verificacion_hash`, `u`.`created_at`, `u`.`email`, `u`.`email_verificado`, `u`.`nombre`, `u`.`password_hash`, `u`.`rol_id`, `u`.`telefono`, `s`.`id`, `s`.`activo`, `s`.`duracion_min`, `s`.`nombre`, `s`.`precio`, `u0`.`id`, `u0`.`activo`, `u0`.`clave_temporal_expira`, `u0`.`clave_temporal_hash`, `u0`.`codigo_expira`, `u0`.`codigo_verificacion_hash`, `u0`.`created_at`, `u0`.`email`, `u0`.`email_verificado`, `u0`.`nombre`, `u0`.`password_hash`, `u0`.`rol_id`, `u0`.`telefono`
+      FROM `citas` AS `c`
+      INNER JOIN `mascotas` AS `m` ON `c`.`mascota_id` = `m`.`id`
+      INNER JOIN `usuarios` AS `u` ON `m`.`dueno_id` = `u`.`id`
+      INNER JOIN `servicios` AS `s` ON `c`.`servicio_id` = `s`.`id`
+      INNER JOIN `usuarios` AS `u0` ON `c`.`veterinario_id` = `u0`.`id`
+      WHERE `c`.`mascota_id` = @mascotaId
+      ORDER BY `c`.`fecha` DESC, `c`.`hora` DESC
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (4ms) [Parameters=[@f_VeterinarioId='?' (DbType = Int32), @f_Fecha='?' (DbType = DateTime)], CommandType='Text', CommandTimeout='30']
+      SELECT COUNT(*)
+      FROM `citas` AS `c`
+      WHERE (`c`.`veterinario_id` = @f_VeterinarioId) AND (`c`.`fecha` = @f_Fecha)
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (5ms) [Parameters=[@f_VeterinarioId='?' (DbType = Int32), @f_Fecha='?' (DbType = DateTime), @p3='?' (DbType = Int32), @p='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+      SELECT `c0`.`id`, `c0`.`estado`, `c0`.`fecha`, `c0`.`hora`, `c0`.`mascota_id`, `c0`.`recordatorio_enviado`, `c0`.`servicio_id`, `c0`.`veterinario_id`, `m`.`id`, `m`.`activo`, `m`.`dueno_id`, `m`.`especie_id`, `m`.`fecha_nacimiento`, `m`.`foto_ruta`, `m`.`nombre`, `m`.`peso_kg`, `m`.`raza`, `u`.`id`, `u`.`activo`, `u`.`clave_temporal_expira`, `u`.`clave_temporal_hash`, `u`.`codigo_expira`, `u`.`codigo_verificacion_hash`, `u`.`created_at`, `u`.`email`, `u`.`email_verificado`, `u`.`nombre`, `u`.`password_hash`, `u`.`rol_id`, `u`.`telefono`, `s`.`id`, `s`.`activo`, `s`.`duracion_min`, `s`.`nombre`, `s`.`precio`, `u0`.`id`, `u0`.`activo`, `u0`.`clave_temporal_expira`, `u0`.`clave_temporal_hash`, `u0`.`codigo_expira`, `u0`.`codigo_verificacion_hash`, `u0`.`created_at`, `u0`.`email`, `u0`.`email_verificado`, `u0`.`nombre`, `u0`.`password_hash`, `u0`.`rol_id`, `u0`.`telefono`
+      FROM (
+          SELECT `c`.`id`, `c`.`estado`, `c`.`fecha`, `c`.`hora`, `c`.`mascota_id`, `c`.`recordatorio_enviado`, `c`.`servicio_id`, `c`.`veterinario_id`
+          FROM `citas` AS `c`
+          WHERE (`c`.`veterinario_id` = @f_VeterinarioId) AND (`c`.`fecha` = @f_Fecha)
+          ORDER BY `c`.`fecha`, `c`.`hora`
+          LIMIT @p3 OFFSET @p
+      ) AS `c0`
+      INNER JOIN `mascotas` AS `m` ON `c0`.`mascota_id` = `m`.`id`
+      INNER JOIN `usuarios` AS `u` ON `m`.`dueno_id` = `u`.`id`
+      INNER JOIN `servicios` AS `s` ON `c0`.`servicio_id` = `s`.`id`
+      INNER JOIN `usuarios` AS `u0` ON `c0`.`veterinario_id` = `u0`.`id`
+      ORDER BY `c0`.`fecha`, `c0`.`hora`
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (5ms) [Parameters=[@id='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+      SELECT `c`.`id`, `c`.`estado`, `c`.`fecha`, `c`.`hora`, `c`.`mascota_id`, `c`.`recordatorio_enviado`, `c`.`servicio_id`, `c`.`veterinario_id`, `m`.`id`, `m`.`activo`, `m`.`dueno_id`, `m`.`especie_id`, `m`.`fecha_nacimiento`, `m`.`foto_ruta`, `m`.`nombre`, `m`.`peso_kg`, `m`.`raza`, `u`.`id`, `u`.`activo`, `u`.`clave_temporal_expira`, `u`.`clave_temporal_hash`, `u`.`codigo_expira`, `u`.`codigo_verificacion_hash`, `u`.`created_at`, `u`.`email`, `u`.`email_verificado`, `u`.`nombre`, `u`.`password_hash`, `u`.`rol_id`, `u`.`telefono`, `s`.`id`, `s`.`activo`, `s`.`duracion_min`, `s`.`nombre`, `s`.`precio`, `u0`.`id`, `u0`.`activo`, `u0`.`clave_temporal_expira`, `u0`.`clave_temporal_hash`, `u0`.`codigo_expira`, `u0`.`codigo_verificacion_hash`, `u0`.`created_at`, `u0`.`email`, `u0`.`email_verificado`, `u0`.`nombre`, `u0`.`password_hash`, `u0`.`rol_id`, `u0`.`telefono`
+      FROM `citas` AS `c`
+      INNER JOIN `mascotas` AS `m` ON `c`.`mascota_id` = `m`.`id`
+      INNER JOIN `usuarios` AS `u` ON `m`.`dueno_id` = `u`.`id`
+      INNER JOIN `servicios` AS `s` ON `c`.`servicio_id` = `s`.`id`
+      INNER JOIN `usuarios` AS `u0` ON `c`.`veterinario_id` = `u0`.`id`
+      WHERE `c`.`id` = @id
+      LIMIT 1
+info: Microsoft.Hosting.Lifetime[0]
+      Application is shutting down...
+info: Microsoft.Hosting.Lifetime[14]
+      Now listening on: http://0.0.0.0:5000
+info: Microsoft.Hosting.Lifetime[0]
+      Application started. Press Ctrl+C to shut down.
+info: Microsoft.Hosting.Lifetime[0]
+      Hosting environment: Production
+info: Microsoft.Hosting.Lifetime[0]
+      Content root path: /home/msi/Escritorio/local 2/PMO-0602/petcare-publish
+info: Microsoft.Hosting.Lifetime[0]
+      Application is shutting down...
