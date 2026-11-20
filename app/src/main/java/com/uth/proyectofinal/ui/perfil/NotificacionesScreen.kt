@@ -4,7 +4,11 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material3.Card
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -12,7 +16,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -20,6 +23,7 @@ import com.uth.proyectofinal.data.remote.dto.Notificacion
 import com.uth.proyectofinal.data.repository.ApiResult
 import com.uth.proyectofinal.data.repository.NotificacionRepository
 import com.uth.proyectofinal.ui.common.AppScaffold
+import com.uth.proyectofinal.ui.common.MessageViewModel
 import com.uth.proyectofinal.ui.common.OnResume
 import com.uth.proyectofinal.ui.common.PagedColumn
 import com.uth.proyectofinal.ui.common.PagedState
@@ -31,7 +35,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class NotificacionesViewModel(private val repo: NotificacionRepository) : ViewModel() {
+class NotificacionesViewModel(private val repo: NotificacionRepository) : MessageViewModel() {
 
     private val _state = MutableStateFlow(PagedState<Notificacion>(hasMore = false))
     val state: StateFlow<PagedState<Notificacion>> = _state.asStateFlow()
@@ -42,6 +46,18 @@ class NotificacionesViewModel(private val repo: NotificacionRepository) : ViewMo
             when (val result = repo.list()) {
                 is ApiResult.Success -> _state.update { it.copy(items = result.data, loading = false) }
                 is ApiResult.Error -> _state.update { it.copy(loading = false, error = result.message) }
+            }
+        }
+    }
+
+    fun probar() {
+        viewModelScope.launch {
+            when (val result = repo.probar()) {
+                is ApiResult.Success -> {
+                    say(result.data.message ?: "Notificación de prueba enviada.")
+                    cargar()
+                }
+                is ApiResult.Error -> say(result.message)
             }
         }
     }
@@ -62,7 +78,16 @@ fun NotificacionesScreen(onBack: () -> Unit) {
 
     OnResume { vm.cargar() }
 
-    AppScaffold(title = "Notificaciones", onBack = onBack) { padding ->
+    AppScaffold(
+        title = "Notificaciones",
+        onBack = onBack,
+        messages = vm.messages,
+        actions = {
+            IconButton(onClick = vm::probar) {
+                Icon(Icons.Filled.Notifications, contentDescription = "Enviar notificación de prueba")
+            }
+        },
+    ) { padding ->
         PagedColumn(
             state = state,
             emptyText = "No tienes notificaciones.",

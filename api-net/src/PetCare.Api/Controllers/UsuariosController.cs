@@ -26,4 +26,8 @@ public class UsuariosController(NotificacionesService notificaciones, IValidator
     [HttpPatch("notificaciones/{id:int}/leer")]
     public async Task<IActionResult> Leer(int id, CancellationToken ct) =>
         Respuesta(await notificaciones.MarcarLeidaAsync(Actor.Id, id, ct));
+
+    [HttpPost("notificaciones/prueba")]
+    public async Task<IActionResult> Probar(CancellationToken ct) =>
+        Respuesta(await notificaciones.ProbarAsync(Actor.Id, ct));
 }

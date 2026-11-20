@@ -7,9 +7,13 @@ namespace PetCare.Application.Servicios;
 
 public class NotificacionesService(
     INotificacionRepositorio notificaciones,
+    IPushSender push,
     IUnitOfWork uow,
+    IReloj reloj,
     Mapeador mapeador)
 {
+    private readonly Notificador _notificador = new(notificaciones, push, uow, reloj);
+
     public async Task<IReadOnlyList<NotificacionDto>> ListarAsync(int usuarioId, CancellationToken ct) =>
         (await notificaciones.DeUsuarioAsync(usuarioId, ct)).Select(mapeador.Notificacion).ToList();
 
@@ -27,5 +31,15 @@ public class NotificacionesService(
         await notificaciones.GuardarDispositivoAsync(usuarioId, fcmToken, ct);
         await uow.GuardarAsync(ct);
         return new MensajeDto("Dispositivo registrado");
+    }
+
+    public async Task<PruebaPushDto> ProbarAsync(int usuarioId, CancellationToken ct)
+    {
+        var resultado = await _notificador.EnviarAsync(usuarioId, "Notificación de prueba",
+            "Las notificaciones de PetCare HN están funcionando en este dispositivo.", "PRUEBA", ct);
+        var mensaje = resultado.Dispositivos > 0
+            ? "Notificación enviada a tus dispositivos."
+            : "Notificación guardada. No hay dispositivos registrados para recibir push.";
+        return new PruebaPushDto(mensaje, resultado.Dispositivos, resultado.Enviados);
     }
 }

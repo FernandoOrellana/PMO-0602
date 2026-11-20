@@ -78,6 +78,8 @@ public record PedidoDto(int Id, DateTime Fecha, string Estado, decimal Total, IR
 
 public record NotificacionDto(int Id, string Titulo, string Mensaje, bool Leida, DateTime Fecha);
 
+public record PruebaPushDto(string Message, int Dispositivos, int Enviados);
+
 public record VentaProductoDto(int ProductoId, string Nombre, int Cantidad, decimal Total);
 
 public record VentasResumen(int TotalPedidos, decimal TotalVentas, IReadOnlyList<VentaProductoDto> Productos);

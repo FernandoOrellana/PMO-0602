@@ -8,6 +8,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Modifier
 import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavBackStackEntry
@@ -19,6 +21,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.uth.proyectofinal.AppContainer
 import com.uth.proyectofinal.data.local.SessionEvents
+import com.uth.proyectofinal.push.PushEvents
 import com.uth.proyectofinal.ui.admin.AdminProductosScreen
 import com.uth.proyectofinal.ui.admin.AdminServiciosScreen
 import com.uth.proyectofinal.ui.admin.AdminVeterinariosScreen
@@ -63,6 +66,15 @@ fun AppNavHost(container: AppContainer) {
                 popUpTo(nav.graph.id) { inclusive = true }
                 launchSingleTop = true
             }
+        }
+    }
+
+    val abrirNotificaciones by PushEvents.pendiente.collectAsStateWithLifecycle()
+    LaunchedEffect(abrirNotificaciones, route) {
+        val sesionLista = route != null && route != Routes.SPLASH && route != Routes.LOGIN && container.auth.user != null
+        if (abrirNotificaciones && sesionLista) {
+            PushEvents.consumir()
+            if (route != Routes.NOTIFICACIONES) nav.navigate(Routes.NOTIFICACIONES) { launchSingleTop = true }
         }
     }
 
