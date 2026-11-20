@@ -20,8 +20,8 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        buildConfigField("String", "API_BASE_URL", "\"http://172.16.217.207:5000\"")
-
+      //  buildConfigField("String", "API_BASE_URL", "\"http://172.16.217.207:5000\"")
+        buildConfigField("String", "API_BASE_URL", "\"https://apiveterinaria.orellanawebserver.space/\"")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 

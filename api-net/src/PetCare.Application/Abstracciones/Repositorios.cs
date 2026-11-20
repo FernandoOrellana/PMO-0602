@@ -85,6 +85,7 @@ public interface INotificacionRepositorio
     void Agregar(Notificacion notificacion);
     Task<IReadOnlyList<string>> TokensDeUsuarioAsync(int usuarioId, CancellationToken ct);
     Task GuardarDispositivoAsync(int usuarioId, string fcmToken, CancellationToken ct);
+    Task EliminarDispositivosAsync(IReadOnlyList<string> fcmTokens, CancellationToken ct);
 }
 
 public interface IReporteRepositorio
