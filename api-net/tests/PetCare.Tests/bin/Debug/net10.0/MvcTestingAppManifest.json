@@ -1,0 +1,6 @@
+{
+  "PetCare.Api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "\/home\/msi\/AndroidStudioProjects\/ProyectoFinal\/api-net\/src\/PetCare.Api",
+  "PetCare.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "\/home\/msi\/AndroidStudioProjects\/ProyectoFinal\/api-net\/src\/PetCare.Application",
+  "PetCare.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "\/home\/msi\/AndroidStudioProjects\/ProyectoFinal\/api-net\/src\/PetCare.Domain",
+  "PetCare.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "\/home\/msi\/AndroidStudioProjects\/ProyectoFinal\/api-net\/src\/PetCare.Infrastructure"
+}

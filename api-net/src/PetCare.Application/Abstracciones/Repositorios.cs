@@ -54,8 +54,10 @@ public interface ICitaRepositorio
 {
     Task<Cita?> PorIdAsync(int id, CancellationToken ct);
     Task<(IReadOnlyList<Cita> Items, int Total)> PaginarAsync(FiltroCitas filtro, CancellationToken ct);
+    Task<IReadOnlyList<Cita>> DeMascotaAsync(int mascotaId, CancellationToken ct);
     Task<IReadOnlyList<Domain.Ocupacion>> ActivasPorVeterinarioYFechaAsync(int veterinarioId, DateOnly fecha, CancellationToken ct);
     Task<IReadOnlyList<Consulta>> ConsultasDeMascotaAsync(int mascotaId, CancellationToken ct);
+    Task<Consulta?> ConsultaPorCitaAsync(int citaId, CancellationToken ct);
     Task<IReadOnlyList<Cita>> PendientesRecordatorioAsync(DateOnly fecha, CancellationToken ct);
     void Agregar(Cita cita);
     void AgregarConsulta(Consulta consulta);

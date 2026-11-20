@@ -24,6 +24,7 @@ object Routes {
     const val MASCOTA = "mascota/{id}"
     const val MASCOTA_FORM = "mascota_form/{id}"
     const val CARNE = "carne/{id}"
+    const val HISTORIAL_CITAS = "mascota/{id}/citas"
     const val CITAS = "citas"
     const val CITA_NUEVA = "cita_nueva"
     const val TIENDA = "tienda"
@@ -53,6 +54,7 @@ object Routes {
     fun mascota(id: Int) = "mascota/$id"
     fun mascotaForm(id: Int = NUEVO) = "mascota_form/$id"
     fun carne(id: Int) = "carne/$id"
+    fun historialCitas(id: Int) = "mascota/$id/citas"
     fun cita(id: Int) = "cita/$id"
     fun consulta(citaId: Int) = "consulta/$citaId"
     fun vacuna(citaId: Int, mascotaId: Int) = "vacuna/$citaId/$mascotaId"
@@ -82,11 +84,12 @@ enum class MainTab(val route: String, val label: String, val icon: ImageVector) 
 }
 
 fun tabsFor(rol: String?): List<MainTab> = when (rol) {
-    Rol.VETERINARIO -> listOf(MainTab.AGENDA, MainTab.PERFIL)
+    Rol.VETERINARIO -> listOf(MainTab.AGENDA, MainTab.MASCOTAS, MainTab.PERFIL)
     Rol.ADMINISTRADOR -> listOf(
         MainTab.PRODUCTOS,
         MainTab.SERVICIOS,
         MainTab.VETERINARIOS,
+        MainTab.MASCOTAS,
         MainTab.REPORTES,
         MainTab.PERFIL,
     )

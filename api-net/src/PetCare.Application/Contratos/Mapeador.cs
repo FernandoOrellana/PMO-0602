@@ -34,12 +34,15 @@ public class Mapeador(IAlmacenArchivos almacen)
         new(c.Id, c.CitaId, c.Fecha, c.Diagnostico, c.Tratamiento, c.Observaciones, c.PesoKg,
             new ResumenDto(c.Veterinario.Id, c.Veterinario.Nombre));
 
-    public CitaDto Cita(PetCare.Domain.Cita c) =>
+    public CitaDto Cita(PetCare.Domain.Cita c) => Cita(c, null);
+
+    public CitaDto Cita(PetCare.Domain.Cita c, ConsultaDto? consulta) =>
         new(c.Id, c.Fecha, c.Hora.ToString(FormatoHora), c.Estado.ToString(),
             new ResumenDto(c.Mascota.Id, c.Mascota.Nombre),
             new ServicioResumenDto(c.Servicio.Id, c.Servicio.Nombre, c.Servicio.Precio),
             new ResumenDto(c.Veterinario.Id, c.Veterinario.Nombre),
-            new DuenoDto(c.Mascota.Dueno.Id, c.Mascota.Dueno.Nombre, c.Mascota.Dueno.Telefono));
+            new DuenoDto(c.Mascota.Dueno.Id, c.Mascota.Dueno.Nombre, c.Mascota.Dueno.Telefono),
+            consulta);
 
     public ProductoDto Producto(PetCare.Domain.Producto p) =>
         new(p.Id, p.Nombre, p.Descripcion, p.Categoria, p.Precio, p.Stock, almacen.UrlPublica(p.ImagenRuta), p.Activo);

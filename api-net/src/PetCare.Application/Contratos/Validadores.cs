@@ -99,6 +99,14 @@ public class ConsultaValidator : AbstractValidator<ConsultaRequest>
     }
 }
 
+public class ObservacionesValidator : AbstractValidator<ObservacionesRequest>
+{
+    public ObservacionesValidator()
+    {
+        RuleFor(x => x.Observaciones).NotEmpty().MaximumLength(2000);
+    }
+}
+
 public class PedidoValidator : AbstractValidator<PedidoRequest>
 {
     public PedidoValidator()

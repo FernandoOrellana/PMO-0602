@@ -88,12 +88,26 @@ public class MascotasService(
         var mascota = await Accesible(actor, id, ct);
         var consultas = await citas.ConsultasDeMascotaAsync(id, ct);
         var vacunas = await vacunacion.DeMascotaAsync(id, ct);
-        var (citasMascota, _) = await citas.PaginarAsync(new FiltroCitas(null, null, id, null, null, 1, 100), ct);
+        var citasMascota = await citas.DeMascotaAsync(id, ct);
+        var consultasDto = consultas.Select(mapeador.Consulta).ToList();
+        var consultasPorCita = consultasDto.ToDictionary(c => c.CitaId);
+        var citasDto = citasMascota.Select(c => mapeador.Cita(c, consultasPorCita.GetValueOrDefault(c.Id))).ToList();
+
         return new HistorialDto(
             mapeador.Mascota(mascota),
-            consultas.Select(mapeador.Consulta).ToList(),
+            consultasDto,
             vacunas.Select(mapeador.Aplicacion).ToList(),
-            citasMascota.Select(mapeador.Cita).ToList());
+            citasDto);
+    }
+
+    public async Task<IReadOnlyList<CitaDto>> CitasDeMascotaAsync(Actor actor, int id, CancellationToken ct)
+    {
+        await Accesible(actor, id, ct);
+        var consultas = await citas.ConsultasDeMascotaAsync(id, ct);
+        var citasMascota = await citas.DeMascotaAsync(id, ct);
+        var consultasDto = consultas.Select(mapeador.Consulta).ToList();
+        var consultasPorCita = consultasDto.ToDictionary(c => c.CitaId);
+        return citasMascota.Select(c => mapeador.Cita(c, consultasPorCita.GetValueOrDefault(c.Id))).ToList();
     }
 
     public async Task<AplicacionVacunaDto> RegistrarVacunaAsync(Actor actor, int mascotaId, AplicacionVacunaRequest r, CancellationToken ct)

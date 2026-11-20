@@ -38,6 +38,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil3.compose.AsyncImage
 import com.uth.proyectofinal.data.remote.dto.Mascota
+import com.uth.proyectofinal.data.remote.dto.Rol
 import com.uth.proyectofinal.data.repository.ApiResult
 import com.uth.proyectofinal.data.repository.MascotaRepository
 import com.uth.proyectofinal.ui.common.AppScaffold
@@ -112,9 +113,11 @@ class MascotaDetailViewModel(
 @Composable
 fun MascotaDetailScreen(
     id: Int,
+    rol: String? = null,
     onBack: () -> Unit,
     onEdit: (Int) -> Unit,
     onCarne: (Int) -> Unit,
+    onHistorialCitas: (Int) -> Unit,
     onDeleted: () -> Unit,
 ) {
     val vm: MascotaDetailViewModel = viewModel(factory = appFactory { MascotaDetailViewModel(id, it.mascotas) })
@@ -122,6 +125,7 @@ fun MascotaDetailScreen(
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
     var confirmar by remember { mutableStateOf(false) }
+    val esDueno = rol == null || rol == Rol.DUENO
 
     OnResume { vm.cargar() }
 
@@ -140,7 +144,7 @@ fun MascotaDetailScreen(
         onBack = onBack,
         messages = vm.messages,
         actions = {
-            if (ui.mascota != null) EditIcon("Editar") { onEdit(id) }
+            if (esDueno && ui.mascota != null) EditIcon("Editar") { onEdit(id) }
         },
     ) { padding ->
         when {
@@ -175,28 +179,35 @@ fun MascotaDetailScreen(
                             Text("Sin foto", style = MaterialTheme.typography.bodyLarge)
                         }
                     }
-                    OutlinedButton(
-                        onClick = {
-                            picker.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
-                        },
-                        enabled = !ui.ocupado,
-                        modifier = Modifier.fillMaxWidth(),
-                    ) { Text("Cambiar foto") }
+                    if (esDueno) {
+                        OutlinedButton(
+                            onClick = {
+                                picker.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+                            },
+                            enabled = !ui.ocupado,
+                            modifier = Modifier.fillMaxWidth(),
+                        ) { Text("Cambiar foto") }
+                    }
 
                     Text("Especie: ${m.especie?.nombre.orEmpty()}", style = MaterialTheme.typography.bodyLarge)
                     Text("Raza: ${m.raza ?: "No registrada"}", style = MaterialTheme.typography.bodyLarge)
                     Text("Nacimiento: ${m.fechaNacimiento ?: "No registrada"}", style = MaterialTheme.typography.bodyLarge)
                     Text("Peso: ${m.pesoKg?.let { "$it kg" } ?: "No registrado"}", style = MaterialTheme.typography.bodyLarge)
 
-                    Button(onClick = { onCarne(id) }, modifier = Modifier.fillMaxWidth()) {
-                        Text("Carné e historial")
+                    Button(onClick = { onHistorialCitas(id) }, modifier = Modifier.fillMaxWidth()) {
+                        Text("Historial de citas")
                     }
-                    Button(
-                        onClick = { confirmar = true },
-                        enabled = !ui.ocupado,
-                        colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error),
-                        modifier = Modifier.fillMaxWidth(),
-                    ) { Text("Eliminar mascota") }
+                    OutlinedButton(onClick = { onCarne(id) }, modifier = Modifier.fillMaxWidth()) {
+                        Text("Carné e historial médico")
+                    }
+                    if (esDueno) {
+                        Button(
+                            onClick = { confirmar = true },
+                            enabled = !ui.ocupado,
+                            colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error),
+                            modifier = Modifier.fillMaxWidth(),
+                        ) { Text("Eliminar mascota") }
+                    }
                     TextButton(onClick = vm::cargar) { Text("Actualizar") }
                 }
             }

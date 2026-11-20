@@ -9,6 +9,7 @@ data class Cita(
     val servicio: ServicioResumen = ServicioResumen(),
     val veterinario: Ref = Ref(),
     val dueno: Ref? = null,
+    val consulta: Consulta? = null,
 )
 
 data class ServicioResumen(val id: Int = 0, val nombre: String = "", val precio: Double = 0.0)
@@ -37,6 +38,10 @@ data class ConsultaRequest(
     val tratamiento: String? = null,
     val observaciones: String? = null,
     val peso: Double? = null,
+)
+
+data class ObservacionesRequest(
+    val observaciones: String,
 )
 
 object CitaEstado {

@@ -71,4 +71,37 @@ public class CitasServiceTests
             Crear().RegistrarConsultaAsync(new Actor(4, Roles.Veterinario), 7, new ConsultaRequest("Sano", null, null, null), default));
         _citas.Verify(c => c.AgregarConsulta(It.IsAny<Consulta>()), Times.Never);
     }
+
+    [Fact]
+    public async Task ActualizarObservaciones_ActualizaConsultaExistente()
+    {
+        var cita = new Cita { Id = 7, MascotaId = 1, Fecha = new DateOnly(2030, 1, 1), Mascota = Datos.Mascota(1, 5), Servicio = Datos.Servicio(), Veterinario = Datos.Usuario(3, Roles.Veterinario), VeterinarioId = 3, Estado = EstadoCita.ATENDIDA };
+        var consulta = new Consulta { Id = 10, CitaId = 7, MascotaId = 1, VeterinarioId = 3, Diagnostico = "Gripe", Observaciones = "Previo", Veterinario = cita.Veterinario };
+        
+        _citas.Setup(c => c.PorIdAsync(7, It.IsAny<CancellationToken>())).ReturnsAsync(cita);
+        _citas.Setup(c => c.ConsultaPorCitaAsync(7, It.IsAny<CancellationToken>())).ReturnsAsync(consulta);
+
+        var res = await Crear().ActualizarObservacionesAsync(new Actor(3, Roles.Veterinario), 7, "Nueva observacion clinica", default);
+
+        Assert.Equal("Nueva observacion clinica", res.Observaciones);
+        Assert.Equal("Nueva observacion clinica", consulta.Observaciones);
+        _uow.Verify(u => u.GuardarAsync(It.IsAny<CancellationToken>()), Times.Once);
+    }
+
+    [Fact]
+    public async Task ActualizarObservaciones_CreaConsultaSiNoExiste()
+    {
+        var cita = new Cita { Id = 8, MascotaId = 1, Fecha = new DateOnly(2030, 1, 1), Mascota = Datos.Mascota(1, 5), Servicio = Datos.Servicio(), Veterinario = Datos.Usuario(3, Roles.Veterinario), VeterinarioId = 3, Estado = EstadoCita.PENDIENTE };
+        
+        _citas.Setup(c => c.PorIdAsync(8, It.IsAny<CancellationToken>())).ReturnsAsync(cita);
+        _citas.Setup(c => c.ConsultaPorCitaAsync(8, It.IsAny<CancellationToken>())).ReturnsAsync((Consulta?)null);
+        _veterinarios.Setup(v => v.PorIdAsync(3, It.IsAny<CancellationToken>())).ReturnsAsync(cita.Veterinario);
+
+        var res = await Crear().ActualizarObservacionesAsync(new Actor(3, Roles.Veterinario), 8, "Observacion inicial", default);
+
+        Assert.Equal("Observacion inicial", res.Observaciones);
+        Assert.Equal(EstadoCita.ATENDIDA, cita.Estado);
+        _citas.Verify(c => c.AgregarConsulta(It.Is<Consulta>(con => con.Observaciones == "Observacion inicial" && con.CitaId == 8)), Times.Once);
+        _uow.Verify(u => u.GuardarAsync(It.IsAny<CancellationToken>()), Times.Once);
+    }
 }

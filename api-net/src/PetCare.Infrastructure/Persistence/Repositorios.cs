@@ -127,6 +127,12 @@ public class CitaRepositorio(PetCareDbContext db) : ICitaRepositorio
         return (items, total);
     }
 
+    public async Task<IReadOnlyList<Cita>> DeMascotaAsync(int mascotaId, CancellationToken ct) =>
+        await Completa()
+            .Where(c => c.MascotaId == mascotaId)
+            .OrderByDescending(c => c.Fecha).ThenByDescending(c => c.Hora)
+            .ToListAsync(ct);
+
     public async Task<IReadOnlyList<Ocupacion>> ActivasPorVeterinarioYFechaAsync(int veterinarioId, DateOnly fecha, CancellationToken ct)
     {
         var filas = await db.Citas
@@ -141,6 +147,10 @@ public class CitaRepositorio(PetCareDbContext db) : ICitaRepositorio
         await db.Consultas.Include(c => c.Veterinario)
             .Where(c => c.MascotaId == mascotaId)
             .OrderByDescending(c => c.Fecha).ToListAsync(ct);
+
+    public async Task<Consulta?> ConsultaPorCitaAsync(int citaId, CancellationToken ct) =>
+        await db.Consultas.Include(c => c.Veterinario)
+            .FirstOrDefaultAsync(c => c.CitaId == citaId, ct);
 
     public async Task<IReadOnlyList<Cita>> PendientesRecordatorioAsync(DateOnly fecha, CancellationToken ct) =>
         await Completa().Where(c => c.Fecha == fecha

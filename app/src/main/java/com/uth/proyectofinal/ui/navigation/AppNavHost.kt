@@ -42,6 +42,7 @@ import com.uth.proyectofinal.ui.dueno.MascotasScreen
 import com.uth.proyectofinal.ui.dueno.PedidoDetailScreen
 import com.uth.proyectofinal.ui.dueno.PedidosScreen
 import com.uth.proyectofinal.ui.dueno.TiendaScreen
+import com.uth.proyectofinal.ui.mascota.HistorialCitasMascotaScreen
 import com.uth.proyectofinal.ui.perfil.NotificacionesScreen
 import com.uth.proyectofinal.ui.perfil.PerfilScreen
 import com.uth.proyectofinal.ui.vet.AgendaScreen
@@ -143,6 +144,7 @@ fun AppNavHost(container: AppContainer) {
 
             composable(Routes.MASCOTAS) {
                 MascotasScreen(
+                    rol = container.auth.user?.rol,
                     onAdd = { nav.navigate(Routes.mascotaForm()) },
                     onOpen = { nav.navigate(Routes.mascota(it)) },
                 )
@@ -150,9 +152,11 @@ fun AppNavHost(container: AppContainer) {
             composable(Routes.MASCOTA, arguments = intArgs("id")) {
                 MascotaDetailScreen(
                     id = it.int("id"),
+                    rol = container.auth.user?.rol,
                     onBack = { nav.popBackStack() },
                     onEdit = { nav.navigate(Routes.mascotaForm(it)) },
                     onCarne = { nav.navigate(Routes.carne(it)) },
+                    onHistorialCitas = { nav.navigate(Routes.historialCitas(it)) },
                     onDeleted = { nav.popBackStack() },
                 )
             }
@@ -165,6 +169,12 @@ fun AppNavHost(container: AppContainer) {
             }
             composable(Routes.CARNE, arguments = intArgs("id")) {
                 CarneHistorialScreen(id = it.int("id"), onBack = { nav.popBackStack() })
+            }
+            composable(Routes.HISTORIAL_CITAS, arguments = intArgs("id")) {
+                HistorialCitasMascotaScreen(
+                    mascotaId = it.int("id"),
+                    onBack = { nav.popBackStack() },
+                )
             }
 
             composable(Routes.CITAS) {
@@ -211,6 +221,7 @@ fun AppNavHost(container: AppContainer) {
                     onBack = { nav.popBackStack() },
                     onConsulta = { nav.navigate(Routes.consulta(it)) },
                     onVacuna = { citaId, mascotaId -> nav.navigate(Routes.vacuna(citaId, mascotaId)) },
+                    onHistorialMascota = { nav.navigate(Routes.historialCitas(it)) },
                 )
             }
             composable(Routes.CONSULTA, arguments = intArgs("citaId")) {

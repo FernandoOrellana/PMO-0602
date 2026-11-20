@@ -24,6 +24,8 @@ class MascotaRepository(private val api: ApiService) {
 
     suspend fun historial(id: Int) = apiCall { api.historial(id) }
 
+    suspend fun citas(id: Int) = apiCall { api.citasMascota(id) }
+
     suspend fun registrarVacuna(id: Int, body: VacunaRequest) =
         apiCall { api.registrarVacuna(id, body) }
 }
