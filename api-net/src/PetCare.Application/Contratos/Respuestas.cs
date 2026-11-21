@@ -76,6 +76,12 @@ public record PedidoItemDto(int ProductoId, string Nombre, decimal PrecioUnitari
 
 public record PedidoDto(int Id, DateTime Fecha, string Estado, decimal Total, IReadOnlyList<PedidoItemDto> Items, ResumenDto Cliente);
 
+public record CobroItemDto(string Descripcion, int Cantidad, decimal PrecioUnitario, decimal Subtotal);
+public record ComprobanteInternoDto(int Id, string NumeroInterno, int? PedidoId, int? CitaId, DateTime Fecha,
+    ResumenDto Cliente, ResumenDto Administrador, string Metodo, string? ReferenciaTransferencia,
+    decimal Importe, IReadOnlyList<CobroItemDto> Items);
+public record ResultadoCobro(ComprobanteInternoDto Comprobante, bool Creado);
+
 public record NotificacionDto(int Id, string Titulo, string Mensaje, bool Leida, DateTime Fecha);
 
 public record PruebaPushDto(string Message, int Dispositivos, int Enviados);

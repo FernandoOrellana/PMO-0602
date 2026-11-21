@@ -11,6 +11,8 @@ public enum EstadoCita { PENDIENTE, CONFIRMADA, ATENDIDA, CANCELADA }
 
 public enum EstadoPedido { PENDIENTE, LISTO_PARA_RECOGER, ENTREGADO, CANCELADO }
 
+public enum MetodoCobro { EFECTIVO, TRANSFERENCIA }
+
 public static class Parametros
 {
     public const int SlotMinutos = 30;

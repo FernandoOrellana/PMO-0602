@@ -94,6 +94,7 @@ public class Cita
     public Mascota Mascota { get; set; } = null!;
     public int ServicioId { get; set; }
     public Servicio Servicio { get; set; } = null!;
+    public decimal? PrecioServicioHistorico { get; set; }
     public int VeterinarioId { get; set; }
     public Usuario Veterinario { get; set; } = null!;
     public DateOnly Fecha { get; set; }
@@ -165,6 +166,38 @@ public class PedidoItem
     public string NombreProducto { get; set; } = "";
     public decimal PrecioUnitario { get; set; }
     public int Cantidad { get; set; }
+    public decimal Subtotal { get; set; }
+}
+
+public class Cobro
+{
+    public int Id { get; set; }
+    public int? PedidoId { get; set; }
+    public Pedido? Pedido { get; set; }
+    public int? CitaId { get; set; }
+    public Cita? Cita { get; set; }
+    public int ClienteId { get; set; }
+    public Usuario Cliente { get; set; } = null!;
+    public int AdministradorId { get; set; }
+    public Usuario Administrador { get; set; } = null!;
+    public string NombreCliente { get; set; } = "";
+    public string NombreAdministrador { get; set; } = "";
+    public DateTime Fecha { get; set; }
+    public decimal Importe { get; set; }
+    public MetodoCobro Metodo { get; set; }
+    public string? ReferenciaTransferencia { get; set; }
+    public string ClaveIdempotencia { get; set; } = "";
+    public List<CobroItem> Items { get; set; } = [];
+}
+
+public class CobroItem
+{
+    public int Id { get; set; }
+    public int CobroId { get; set; }
+    public Cobro Cobro { get; set; } = null!;
+    public string Descripcion { get; set; } = "";
+    public int Cantidad { get; set; }
+    public decimal PrecioUnitario { get; set; }
     public decimal Subtotal { get; set; }
 }
 

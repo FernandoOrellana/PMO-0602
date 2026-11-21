@@ -30,6 +30,8 @@ public record PedidoRequest(IReadOnlyList<ItemPedidoRequest> Items);
 
 public record EstadoPedidoRequest(PetCare.Domain.EstadoPedido Estado);
 
+public record RegistrarCobroRequest(string Metodo, string? ReferenciaTransferencia, string ClaveIdempotencia);
+
 public record ProductoRequest(string Nombre, string? Descripcion, string Categoria, decimal Precio, int Stock);
 
 public record ServicioRequest(string Nombre, decimal Precio, int DuracionMin);

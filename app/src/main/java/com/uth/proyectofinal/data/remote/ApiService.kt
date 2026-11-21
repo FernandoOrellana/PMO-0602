@@ -3,6 +3,7 @@ package com.uth.proyectofinal.data.remote
 import com.uth.proyectofinal.data.remote.dto.*
 import okhttp3.MultipartBody
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
@@ -151,6 +152,21 @@ interface ApiService {
 
     @GET("api/pedidos/{id}")
     suspend fun pedido(@Path("id") id: Int): ApiResponse<Pedido>
+
+    @PATCH("api/pedidos/{id}/estado")
+    suspend fun cambiarEstadoPedido(@Path("id") id: Int, @Body body: EstadoPedidoRequest): ApiResponse<Pedido>
+
+    @GET("api/admin/pedidos/{id}/cobro")
+    suspend fun cobroPedido(@Path("id") id: Int): Response<ApiResponse<ComprobanteInterno>>
+
+    @POST("api/admin/pedidos/{id}/cobro")
+    suspend fun cobrarPedido(@Path("id") id: Int, @Body body: RegistrarCobroRequest): ApiResponse<ComprobanteInterno>
+
+    @GET("api/admin/citas/{id}/cobro")
+    suspend fun cobroCita(@Path("id") id: Int): Response<ApiResponse<ComprobanteInterno>>
+
+    @POST("api/admin/citas/{id}/cobro")
+    suspend fun cobrarCita(@Path("id") id: Int, @Body body: RegistrarCobroRequest): ApiResponse<ComprobanteInterno>
 
     @GET("api/notificaciones")
     suspend fun notificaciones(): ApiResponse<List<Notificacion>>

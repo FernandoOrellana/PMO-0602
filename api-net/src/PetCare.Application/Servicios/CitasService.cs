@@ -43,6 +43,7 @@ public class CitasService(
         {
             MascotaId = r.MascotaId,
             ServicioId = r.ServicioId,
+            PrecioServicioHistorico = servicio.Precio,
             VeterinarioId = r.VeterinarioId,
             Fecha = r.Fecha,
             Hora = hora,

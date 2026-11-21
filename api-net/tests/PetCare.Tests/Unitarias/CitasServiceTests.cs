@@ -31,6 +31,27 @@ public class CitasServiceTests
     }
 
     [Fact]
+    public async Task Agendar_GuardaElPrecioVigenteComoPrecioHistorico()
+    {
+        var mascota = Datos.Mascota(1, 5);
+        var servicio = Datos.Servicio();
+        var vet = Datos.Usuario(3, Roles.Veterinario);
+        vet.Horarios = [new VeterinarioHorario { DiaSemana = 2, HoraInicio = new TimeOnly(8, 0), HoraFin = new TimeOnly(12, 0) }];
+        _mascotas.Setup(m => m.PorIdAsync(1, It.IsAny<CancellationToken>())).ReturnsAsync(mascota);
+        _catalogo.Setup(c => c.ServicioPorIdAsync(1, It.IsAny<CancellationToken>())).ReturnsAsync(servicio);
+        _veterinarios.Setup(v => v.PorIdAsync(3, It.IsAny<CancellationToken>())).ReturnsAsync(vet);
+        _citas.Setup(c => c.ActivasPorVeterinarioYFechaAsync(3, It.IsAny<DateOnly>(), It.IsAny<CancellationToken>())).ReturnsAsync([]);
+        Cita? guardada = null;
+        _citas.Setup(c => c.Agregar(It.IsAny<Cita>())).Callback<Cita>(c => { guardada = c; c.Mascota = mascota; c.Servicio = servicio; c.Veterinario = vet; });
+        _citas.Setup(c => c.PorIdAsync(It.IsAny<int>(), It.IsAny<CancellationToken>())).ReturnsAsync(() => guardada);
+
+        await Crear().AgendarAsync(new Actor(5, Roles.Dueno), Solicitud(), default);
+        servicio.Precio = 500m;
+
+        Assert.Equal(350m, guardada!.PrecioServicioHistorico);
+    }
+
+    [Fact]
     public async Task Agendar_RechazaUnaMascotaQueNoEsDelDueno()
     {
         _mascotas.Setup(m => m.PorIdAsync(1, It.IsAny<CancellationToken>())).ReturnsAsync(Datos.Mascota(1, duenoId: 5));

@@ -1,6 +1,10 @@
 package com.uth.proyectofinal.ui.navigation
 
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.layout.widthIn
+import androidx.compose.ui.unit.dp
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -23,6 +27,11 @@ import com.uth.proyectofinal.AppContainer
 import com.uth.proyectofinal.data.local.SessionEvents
 import com.uth.proyectofinal.push.PushEvents
 import com.uth.proyectofinal.ui.admin.AdminProductosScreen
+import com.uth.proyectofinal.ui.admin.AdminPedidosScreen
+import com.uth.proyectofinal.ui.admin.AdminPedidoDetailScreen
+import com.uth.proyectofinal.ui.admin.AdminCitasScreen
+import com.uth.proyectofinal.ui.admin.AdminCitaCobroScreen
+import com.uth.proyectofinal.data.remote.dto.Rol
 import com.uth.proyectofinal.ui.admin.AdminServiciosScreen
 import com.uth.proyectofinal.ui.admin.AdminVeterinariosScreen
 import com.uth.proyectofinal.ui.admin.HorariosScreen
@@ -83,7 +92,10 @@ fun AppNavHost(container: AppContainer) {
     Scaffold(
         bottomBar = {
             if (showBar) {
-                NavigationBar {
+                val barModifier = if (container.auth.user?.rol == Rol.ADMINISTRADOR) {
+                    Modifier.horizontalScroll(rememberScrollState()).widthIn(min = (tabs.size * 80).dp)
+                } else Modifier
+                NavigationBar(modifier = barModifier) {
                     tabs.forEach { tab ->
                         NavigationBarItem(
                             selected = route == tab.route,
@@ -253,6 +265,18 @@ fun AppNavHost(container: AppContainer) {
                     onAdd = { nav.navigate(Routes.productoForm()) },
                     onEdit = { nav.navigate(Routes.productoForm(it)) },
                 )
+            }
+            composable(Routes.ADMIN_PEDIDOS) {
+                AdminPedidosScreen(onOpen = { nav.navigate(Routes.adminPedido(it)) })
+            }
+            composable(Routes.ADMIN_PEDIDO, arguments = intArgs("id")) {
+                AdminPedidoDetailScreen(id = it.int("id"), onBack = { nav.popBackStack() })
+            }
+            composable(Routes.ADMIN_CITAS) {
+                AdminCitasScreen(onOpen = { nav.navigate(Routes.adminCita(it)) })
+            }
+            composable(Routes.ADMIN_CITA, arguments = intArgs("id")) {
+                AdminCitaCobroScreen(id = it.int("id"), onBack = { nav.popBackStack() })
             }
             composable(Routes.PRODUCTO_FORM, arguments = intArgs("id")) {
                 ProductoFormScreen(id = it.int("id"), onBack = { nav.popBackStack() })

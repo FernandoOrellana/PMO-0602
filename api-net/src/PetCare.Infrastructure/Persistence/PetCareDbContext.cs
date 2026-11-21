@@ -21,6 +21,8 @@ public class PetCareDbContext(DbContextOptions<PetCareDbContext> options) : DbCo
     public DbSet<Producto> Productos => Set<Producto>();
     public DbSet<Pedido> Pedidos => Set<Pedido>();
     public DbSet<PedidoItem> PedidoItems => Set<PedidoItem>();
+    public DbSet<Cobro> Cobros => Set<Cobro>();
+    public DbSet<CobroItem> CobroItems => Set<CobroItem>();
     public DbSet<Notificacion> Notificaciones => Set<Notificacion>();
 
     protected override void OnModelCreating(ModelBuilder b)
@@ -40,6 +42,8 @@ public class PetCareDbContext(DbContextOptions<PetCareDbContext> options) : DbCo
         Tabla<Producto>(b, "productos");
         Tabla<Pedido>(b, "pedidos");
         Tabla<PedidoItem>(b, "pedido_items");
+        Tabla<Cobro>(b, "cobros");
+        Tabla<CobroItem>(b, "cobro_items");
         Tabla<Notificacion>(b, "notificaciones");
 
         b.Entity<Usuario>(e =>
@@ -59,6 +63,7 @@ public class PetCareDbContext(DbContextOptions<PetCareDbContext> options) : DbCo
             e.HasOne(c => c.Servicio).WithMany().HasForeignKey(c => c.ServicioId);
             e.HasOne(c => c.Veterinario).WithMany().HasForeignKey(c => c.VeterinarioId);
             e.Property(c => c.Estado).HasConversion<string>();
+            e.Property(c => c.PrecioServicioHistorico).HasPrecision(10, 2);
         });
         b.Entity<Consulta>(e =>
         {
@@ -83,6 +88,30 @@ public class PetCareDbContext(DbContextOptions<PetCareDbContext> options) : DbCo
         b.Entity<PedidoItem>(e =>
         {
             e.HasOne(i => i.Producto).WithMany().HasForeignKey(i => i.ProductoId);
+            e.Property(i => i.PrecioUnitario).HasPrecision(10, 2);
+            e.Property(i => i.Subtotal).HasPrecision(10, 2);
+        });
+
+        b.Entity<Cobro>(e =>
+        {
+            e.HasOne(c => c.Pedido).WithMany().HasForeignKey(c => c.PedidoId).OnDelete(DeleteBehavior.Restrict);
+            e.HasOne(c => c.Cita).WithMany().HasForeignKey(c => c.CitaId).OnDelete(DeleteBehavior.Restrict);
+            e.HasOne(c => c.Cliente).WithMany().HasForeignKey(c => c.ClienteId).OnDelete(DeleteBehavior.Restrict);
+            e.HasOne(c => c.Administrador).WithMany().HasForeignKey(c => c.AdministradorId).OnDelete(DeleteBehavior.Restrict);
+            e.HasMany(c => c.Items).WithOne(i => i.Cobro).HasForeignKey(i => i.CobroId).OnDelete(DeleteBehavior.Restrict);
+            e.HasIndex(c => c.PedidoId).IsUnique();
+            e.HasIndex(c => c.CitaId).IsUnique();
+            e.HasIndex(c => c.ClaveIdempotencia).IsUnique();
+            e.Property(c => c.Importe).HasPrecision(10, 2);
+            e.Property(c => c.Metodo).HasConversion<string>().HasMaxLength(20);
+            e.Property(c => c.ClaveIdempotencia).HasMaxLength(64).IsUnicode(false);
+            e.Property(c => c.NombreCliente).HasMaxLength(120);
+            e.Property(c => c.NombreAdministrador).HasMaxLength(120);
+            e.Property(c => c.ReferenciaTransferencia).HasMaxLength(120);
+        });
+        b.Entity<CobroItem>(e =>
+        {
+            e.Property(i => i.Descripcion).HasMaxLength(160);
             e.Property(i => i.PrecioUnitario).HasPrecision(10, 2);
             e.Property(i => i.Subtotal).HasPrecision(10, 2);
         });

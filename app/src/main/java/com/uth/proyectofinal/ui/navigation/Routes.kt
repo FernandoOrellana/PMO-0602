@@ -40,6 +40,10 @@ object Routes {
     const val VACUNA = "vacuna/{citaId}/{mascotaId}"
 
     const val ADMIN_PRODUCTOS = "admin_productos"
+    const val ADMIN_PEDIDOS = "admin_pedidos"
+    const val ADMIN_PEDIDO = "admin_pedido/{id}"
+    const val ADMIN_CITAS = "admin_citas"
+    const val ADMIN_CITA = "admin_cita/{id}"
     const val PRODUCTO_FORM = "producto_form/{id}"
     const val ADMIN_SERVICIOS = "admin_servicios"
     const val ADMIN_VETERINARIOS = "admin_veterinarios"
@@ -59,6 +63,8 @@ object Routes {
     fun consulta(citaId: Int) = "consulta/$citaId"
     fun vacuna(citaId: Int, mascotaId: Int) = "vacuna/$citaId/$mascotaId"
     fun pedido(id: Int) = "pedido/$id"
+    fun adminPedido(id: Int) = "admin_pedido/$id"
+    fun adminCita(id: Int) = "admin_cita/$id"
     fun productoForm(id: Int = NUEVO) = "producto_form/$id"
     fun veterinarioForm(id: Int = NUEVO) = "veterinario_form/$id"
     fun horarios(id: Int) = "horarios/$id"
@@ -77,6 +83,8 @@ enum class MainTab(val route: String, val label: String, val icon: ImageVector) 
     PEDIDOS(Routes.PEDIDOS, "Pedidos", Icons.AutoMirrored.Filled.List),
     AGENDA(Routes.AGENDA, "Agenda", Icons.Default.DateRange),
     PRODUCTOS(Routes.ADMIN_PRODUCTOS, "Productos", Icons.Default.ShoppingCart),
+    ADMIN_PEDIDOS(Routes.ADMIN_PEDIDOS, "Pedidos", Icons.AutoMirrored.Filled.List),
+    ADMIN_CITAS(Routes.ADMIN_CITAS, "Citas", Icons.Default.DateRange),
     SERVICIOS(Routes.ADMIN_SERVICIOS, "Servicios", Icons.Default.Settings),
     VETERINARIOS(Routes.ADMIN_VETERINARIOS, "Veterinarios", Icons.Default.Person),
     REPORTES(Routes.REPORTES, "Reportes", Icons.Default.Info),
@@ -87,6 +95,8 @@ fun tabsFor(rol: String?): List<MainTab> = when (rol) {
     Rol.VETERINARIO -> listOf(MainTab.AGENDA, MainTab.MASCOTAS, MainTab.PERFIL)
     Rol.ADMINISTRADOR -> listOf(
         MainTab.PRODUCTOS,
+        MainTab.ADMIN_PEDIDOS,
+        MainTab.ADMIN_CITAS,
         MainTab.SERVICIOS,
         MainTab.VETERINARIOS,
         MainTab.MASCOTAS,

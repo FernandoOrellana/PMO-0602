@@ -78,6 +78,16 @@ public interface IPedidoRepositorio
     void Agregar(Pedido pedido);
 }
 
+public interface ICobroRepositorio
+{
+    Task<T> EnTransaccionAsync<T>(bool esPedido, int origenId, Func<Task<T>> operacion, CancellationToken ct);
+    Task<Cobro?> PorClaveAsync(string clave, CancellationToken ct);
+    Task<Cobro?> PorOrigenAsync(bool esPedido, int origenId, CancellationToken ct);
+    Task<Cobro?> PorIdAsync(int id, CancellationToken ct);
+    void Agregar(Cobro cobro);
+    Task GuardarAsync(CancellationToken ct);
+}
+
 public interface INotificacionRepositorio
 {
     Task<IReadOnlyList<Notificacion>> DeUsuarioAsync(int usuarioId, CancellationToken ct);
