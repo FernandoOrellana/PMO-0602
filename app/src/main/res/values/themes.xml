@@ -1,5 +1,0 @@
-<resources>
-    <style name="Base.Theme.ProyectoFinal" parent="Theme.Material3.DayNight.NoActionBar" />
-
-    <style name="Theme.ProyectoFinal" parent="Base.Theme.ProyectoFinal" />
-</resources>

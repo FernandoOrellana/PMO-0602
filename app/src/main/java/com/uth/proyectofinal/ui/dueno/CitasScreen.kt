@@ -69,7 +69,7 @@ fun CitasScreen(onNueva: () -> Unit) {
         PagedColumn(
             state = state,
             emptyText = "No tienes citas. Usa + para agendar una.",
-            onLoadMore = vm::loadMore,
+            onLoadMore = vm::loadMore, onRefresh = vm::pullRefresh,
             modifier = Modifier.padding(padding),
         ) { cita ->
             Card(modifier = Modifier.fillMaxWidth()) {

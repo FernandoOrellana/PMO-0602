@@ -25,7 +25,7 @@ fun AdminCitasScreen(onOpen: (Int) -> Unit) {
     val state by vm.state.collectAsStateWithLifecycle()
     OnResume { vm.refresh() }
     AppScaffold(title = "Citas atendidas") { padding ->
-        PagedColumn(state = state, emptyText = "No hay citas atendidas.", onLoadMore = vm::loadMore, modifier = Modifier.padding(padding)) { cita ->
+        PagedColumn(state = state, emptyText = "No hay citas atendidas.", onLoadMore = vm::loadMore, onRefresh = vm::pullRefresh, modifier = Modifier.padding(padding)) { cita ->
             Card(onClick = { onOpen(cita.id) }, modifier = Modifier.fillMaxWidth()) {
                 Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                     Text("Cita #${cita.id} · ${cita.fecha} ${cita.hora}", style = MaterialTheme.typography.titleMedium)

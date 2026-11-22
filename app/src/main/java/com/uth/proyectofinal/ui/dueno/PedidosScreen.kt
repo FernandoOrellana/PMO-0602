@@ -43,7 +43,7 @@ fun PedidosScreen(onOpen: (Int) -> Unit) {
         PagedColumn(
             state = state,
             emptyText = "Aún no tienes pedidos.",
-            onLoadMore = vm::loadMore,
+            onLoadMore = vm::loadMore, onRefresh = vm::pullRefresh,
             modifier = Modifier.padding(padding),
         ) { pedido ->
             Card(onClick = { onOpen(pedido.id) }, modifier = Modifier.fillMaxWidth()) {

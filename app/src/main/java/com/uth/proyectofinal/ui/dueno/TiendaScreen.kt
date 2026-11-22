@@ -75,7 +75,7 @@ class TiendaViewModel(
 
     fun filtrar(categoria: String) {
         _categoria.value = categoria.trim()
-        refresh()
+        reload()
     }
 
     fun agregar(producto: Producto) {

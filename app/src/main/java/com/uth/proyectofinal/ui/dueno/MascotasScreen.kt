@@ -53,7 +53,7 @@ fun MascotasScreen(
             } else {
                 "No hay mascotas registradas en el sistema."
             },
-            onLoadMore = vm::loadMore,
+            onLoadMore = vm::loadMore, onRefresh = vm::pullRefresh,
             modifier = Modifier.padding(padding),
         ) { m ->
             SimpleCard(

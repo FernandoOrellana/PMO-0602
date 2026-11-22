@@ -48,7 +48,7 @@ class AgendaViewModel(private val citas: CitaRepository) : PagedViewModel<Cita>(
 
     fun cambiarFecha(nueva: String) {
         _fecha.value = nueva
-        refresh()
+        reload()
     }
 }
 
@@ -80,7 +80,7 @@ fun AgendaScreen(onOpen: (Int) -> Unit) {
             PagedColumn(
                 state = state,
                 emptyText = "No hay citas para esta fecha.",
-                onLoadMore = vm::loadMore,
+                onLoadMore = vm::loadMore, onRefresh = vm::pullRefresh,
             ) { cita ->
                 Card(onClick = { onOpen(cita.id) }, modifier = Modifier.fillMaxWidth()) {
                     Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {

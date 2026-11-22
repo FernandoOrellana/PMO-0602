@@ -35,6 +35,14 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.Icon
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.painterResource
+import com.uth.proyectofinal.R
 
 data class LoginUi(
     val email: String = "",
@@ -96,7 +104,7 @@ fun LoginScreen(
         ui.rol?.let(onLoggedIn)
     }
 
-    AppScaffold(title = "Iniciar sesión") { padding ->
+    AppScaffold(title = "") { padding ->
         Column(
             modifier = Modifier
                 .padding(padding)
@@ -106,9 +114,28 @@ fun LoginScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
+            Spacer(Modifier.height(16.dp))
+            Box(
+                Modifier
+                    .size(88.dp)
+                    .clip(CircleShape)
+                    .background(MaterialTheme.colorScheme.primaryContainer),
+                contentAlignment = Alignment.Center,
+            ) {
+                Icon(
+                    painterResource(R.drawable.ic_notificacion),
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.size(44.dp),
+                )
+            }
             Text("PetCare HN", style = MaterialTheme.typography.headlineMedium, color = MaterialTheme.colorScheme.primary)
-            Text("Veterinaria Huellitas", style = MaterialTheme.typography.bodyLarge)
-            Spacer(Modifier.height(8.dp))
+            Text(
+                "Veterinaria Huellitas",
+                style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            Spacer(Modifier.height(12.dp))
             AppTextField(
                 value = ui.email,
                 onValueChange = vm::onEmail,
